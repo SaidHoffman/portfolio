@@ -194,7 +194,11 @@ function renderProjects(projects) {
         <p class="project-desc">${p.shortDesc}</p>
         <div class="project-links">
           <a class="project-link" href="#" onclick="openModal(${p.id});return false">Ver detalles →</a>
-          ${p.github ? `<a class="project-link ghost" href="${p.github}" target="_blank" rel="noopener">GitHub ↗</a>` : ''}
+          ${p.github
+            ? `<a class="project-link ghost" href="${p.github}" target="_blank" rel="noopener">GitHub ↗</a>`
+            : p.articleUrl
+              ? `<a class="project-link ghost" href="${p.articleUrl}" target="_blank" rel="noopener">Leer artículo ↗</a>`
+              : ''}
         </div>
       </div>
     </article>
