@@ -16,8 +16,10 @@
     "degree": "Técnico en Computación",
     "startDate": "2018",
     "endDate": "2021",
-    "gpa": "",
+    "gpa": "9.45 / 10",
     "status": "Titulado",
-    "highlights": []
+    "highlights": [
+      "Participación en concursos interpolitécnicos de cálculo"
+    ]
   }
 ]
