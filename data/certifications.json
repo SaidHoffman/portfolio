@@ -1,0 +1,83 @@
+[
+  {
+    "name": "ETL Processing on Google Cloud Using Dataflow and BigQuery",
+    "issuer": "Google Cloud",
+    "date": "Abr 2026",
+    "credentialId": "8CBYXPT9INU8",
+    "abbr": "ETL",
+    "color": "#4285F4",
+    "verifyUrl": "https://coursera.org/verify/8CBYXPT9INU8"
+  },
+  {
+    "name": "Introduction to Data Engineering on Google Cloud",
+    "issuer": "Google Cloud",
+    "date": "Abr 2026",
+    "credentialId": "6MKNVOG12MHE",
+    "abbr": "DE",
+    "color": "#4285F4",
+    "verifyUrl": "https://coursera.org/verify/6MKNVOG12MHE"
+  },
+  {
+    "name": "Supervised Machine Learning: Regression and Classification",
+    "issuer": "DeepLearning.AI / Stanford",
+    "date": "Mar 2026",
+    "credentialId": "LMUVE5KYYQL2",
+    "abbr": "ML",
+    "color": "#C62828",
+    "verifyUrl": "https://coursera.org/verify/LMUVE5KYYQL2"
+  },
+  {
+    "name": "Prepare Data for ML APIs on Google Cloud",
+    "issuer": "Google Cloud Skill Badge",
+    "date": "2025",
+    "credentialId": "",
+    "abbr": "API",
+    "color": "#0F9D58",
+    "verifyUrl": "https://www.credly.com/badges/73c4fef3-9c45-46c4-b4c3-8c35346af7b7"
+  },
+  {
+    "name": "Build a Secure Google Cloud Network",
+    "issuer": "Google Cloud Skill Badge",
+    "date": "2025",
+    "credentialId": "",
+    "abbr": "NET",
+    "color": "#0F9D58",
+    "verifyUrl": "https://www.credly.com/badges/ecf1f98b-322d-4375-8fdc-c551d893145f"
+  },
+  {
+    "name": "Google Cloud Computing Foundations",
+    "issuer": "Google Cloud",
+    "date": "2025",
+    "credentialId": "",
+    "abbr": "GCP",
+    "color": "#4285F4",
+    "verifyUrl": "https://www.credly.com/badges/4d3788fa-aab7-4783-b3dc-4d34f7870bf3"
+  },
+  {
+    "name": "Problem Solving (Gold)",
+    "issuer": "HackerRank",
+    "date": "2025",
+    "credentialId": "37bee920e4f8",
+    "abbr": "PS",
+    "color": "#2EC866",
+    "verifyUrl": "https://www.hackerrank.com/certificates/37bee920e4f8"
+  },
+  {
+    "name": "Python Professional Certificate",
+    "issuer": "HackerRank",
+    "date": "2025",
+    "credentialId": "334aaaa99db5",
+    "abbr": "Py",
+    "color": "#2EC866",
+    "verifyUrl": "https://www.hackerrank.com/certificates/334aaaa99db5"
+  },
+  {
+    "name": "SQL Intermediate",
+    "issuer": "HackerRank",
+    "date": "2025",
+    "credentialId": "b1bcd547cd78",
+    "abbr": "SQL",
+    "color": "#2EC866",
+    "verifyUrl": "https://www.hackerrank.com/certificates/b1bcd547cd78"
+  }
+]

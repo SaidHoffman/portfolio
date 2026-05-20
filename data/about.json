@@ -1,0 +1,13 @@
+{
+  "bio": [
+    "Soy estudiante de Ingeniería en Sistemas Computacionales en la ESCOM–IPN (egreso junio 2026), con base técnica desde el CECyT 8. Mi camino en datos comenzó procesando señales digitales en investigación académica, donde aprendí que los datos bien estructurados son el cimiento de cualquier solución útil — y que automatizar lo repetitivo es donde está el verdadero impacto.",
+    "Me especializo en pipelines ETL/ELT de extremo a extremo: procesé más de 2 millones de registros, orquesté flujos con Apache Airflow, transformé datos con dbt y SQL avanzado (CTEs, funciones de ventana), y desplegué soluciones en GCP (BigQuery, Dataflow). Ya sea ingiriendo datos de APIs en tiempo real o levantando entornos reproducibles con Docker, me importa construir sistemas observables, bien documentados y mantenibles.",
+    "Mi Trabajo Terminal, Argon2Net, obtuvo Mención Honorífica por combinar una arquitectura ETL modular en Python con una red BiLSTM — alcanzando el 86.67% de aprobación en la suite NIST SP 800-22 con 5 ms de inferencia por muestra. Ese mismo estándar de rigor y precisión es el que aplico en cada proyecto de datos en el que trabajo."
+  ],
+  "facts": [
+    { "num": "2M+",  "label": "Registros procesados" },
+    { "num": "2",    "label": "Pipelines de extremo a extremo" },
+    { "num": "9",    "label": "Certificaciones obtenidas" },
+    { "num": "10+",  "label": "Herramientas en uso productivo" }
+  ]
+}

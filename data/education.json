@@ -1,0 +1,23 @@
+[
+  {
+    "institution": "Escuela Superior de Cómputo (ESCOM) – IPN",
+    "degree": "Ingeniería en Sistemas Computacionales",
+    "startDate": "Ago 2021",
+    "endDate": "Jun 2026 (Esperado)",
+    "gpa": "9.02 / 10",
+    "status": "Carta Pasante",
+    "highlights": [
+      "Trabajo Terminal «Argon2Net» — Propuesto a Mención Honorífica",
+      "Enfoque en ingeniería de datos, sistemas distribuidos y desarrollo de software"
+    ]
+  },
+  {
+    "institution": "CECyT 8 «Narciso Bassols» – IPN",
+    "degree": "Técnico en Computación",
+    "startDate": "2018",
+    "endDate": "2021",
+    "gpa": "",
+    "status": "Titulado",
+    "highlights": []
+  }
+]

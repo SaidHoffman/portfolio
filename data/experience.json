@@ -1,0 +1,29 @@
+[
+  {
+    "company": "América Móvil Contenido (Grupo Carso)",
+    "role": "Becario QA Tester",
+    "type": "Prácticas Profesionales",
+    "startDate": "Oct 2025",
+    "endDate": "Abr 2026",
+    "bullets": [
+      "Ejecuté más de 120 casos de prueba funcionales y de regresión en portales web de Marca Claro, documentando resultados por sprint con cobertura del 100% de los requerimientos definidos.",
+      "Reduje el tiempo promedio de cierre de incidencias en ~25% implementando plantillas estandarizadas de reporte, garantizando trazabilidad completa desde la detección hasta la resolución.",
+      "Detecté y escalé al equipo líder un promedio de 10 incidencias por ciclo de validación, apoyando la estabilidad de 3 portales web activos durante el periodo."
+    ],
+    "tags": ["QA Testing", "Pruebas de Regresión", "Reporte de Bugs", "Agile"],
+    "letterUrl": "/assets/material/carta-recomendacion.pdf"
+  },
+  {
+    "company": "Instituto Politécnico Nacional – ESCOM",
+    "role": "Servicio Social — Procesamiento Digital de Señales",
+    "type": "Servicio Social",
+    "startDate": "Sep 2024",
+    "endDate": "Mar 2025",
+    "bullets": [
+      "Incrementé la precisión en clasificación de señales acústicas en un 15% automatizando la generación de reportes técnicos y métricas de desempeño con Python (Pandas, Matplotlib).",
+      "Reduje la interferencia de señal en un 20% desarrollando filtros de reducción de ruido y algoritmos de optimización con NumPy y SciPy aplicados a conjuntos de datos de audio del IPN.",
+      "Procesé y normalicé más de 50,000 muestras de audio mediante scripts modulares de pre y post procesamiento, reduciendo el tiempo de análisis manual en ~60%."
+    ],
+    "tags": ["Python", "Pandas", "NumPy", "SciPy", "Matplotlib", "Procesamiento de Señales"]
+  }
+]

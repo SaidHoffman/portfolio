@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Said Sigala Morales — Ingeniero de Datos especializado en pipelines ETL/ELT, Apache Airflow, dbt y GCP. Portafolio de proyectos de ingeniería de datos de extremo a extremo."/>
+  <title>Portafolio</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="/assets/css/styles.css"/>
+
+  <!-- Theme — apply before render to avoid flash -->
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t) document.documentElement.setAttribute('data-theme', t);
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+        document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+
+  <!-- Netlify Forms support (keep this hidden input for form detection) -->
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input name="name"/><input name="email"/><textarea name="message"></textarea>
+  </form>
+</head>
+<body>
+
+<!-- SCROLL PROGRESS -->
+<div id="scrollProgress" aria-hidden="true"></div>
+
+<!-- LOADER -->
+<div id="loader" role="status" aria-label="Cargando portafolio">
+  <div class="loader-dot"></div>
+  <div class="loader-dot"></div>
+  <div class="loader-dot"></div>
+</div>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#hero" class="nav-logo" id="navLogo">SS.</a>
+
+  <ul class="nav-links" id="navLinks" role="list">
+    <li><a href="#education">Educación</a></li>
+    <li><a href="#skills">Habilidades</a></li>
+    <li><a href="#projects">Proyectos</a></li>
+    <li><a href="#experience">Experiencia</a></li>
+    <li><a href="#certifications">Certificaciones</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+
+  <a href="#contact" class="nav-cta" id="navCta">Contáctame</a>
+
+  <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema"></button>
+
+  <button class="nav-mobile-btn" id="mobileNavBtn" aria-label="Abrir menú" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</nav>
+
+<!-- ══════════════════════════════════
+     HERO
+════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-blob" aria-hidden="true"></div>
+  <div class="hero-blob2" aria-hidden="true"></div>
+  <div class="container">
+    <div class="hero-inner">
+
+      <div class="fade-up">
+        <div class="hero-available" id="heroAvailable">
+          <span class="hero-available-dot"></span>
+          Disponible para nuevas oportunidades
+        </div>
+
+        <h1 id="heroName"></h1>
+        <p id="heroTitle" style="font-size:1.125rem;color:var(--text-muted);margin-bottom:0.5rem"></p>
+        <div id="heroTyped" class="hero-typed"></div>
+        <p class="hero-bio" id="heroBio"></p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary" id="heroProjectsLink">Ver mis proyectos →</a>
+          <a href="#" class="btn-ghost" id="heroCvLink">Descargar CV</a>
+        </div>
+
+        <div class="hero-socials" id="heroSocials"></div>
+      </div>
+
+      <div class="hero-photo" id="heroPhoto"></div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div id="statsStrip">
+  <div class="container">
+    <div class="stats-grid fade-up" id="statsGrid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     EDUCATION
+════════════════════════════════════ -->
+<section id="education">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="section-label">Formación académica</p>
+      <h2 class="section-title">Educación</h2>
+      <p class="section-sub">Mi trayectoria académica en ingeniería de sistemas y computación en el Instituto Politécnico Nacional.</p>
+    </div>
+    <div id="educationList"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     SKILLS
+════════════════════════════════════ -->
+<section id="skills">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="section-label">Stack técnico</p>
+      <h2 class="section-title">Habilidades y Herramientas</h2>
+      <p class="section-sub">Los lenguajes, frameworks y plataformas con los que construyo soluciones de datos de extremo a extremo.</p>
+    </div>
+    <div class="tech-marquee" id="techMarquee"></div>
+    <div class="skills-groups fade-up delay-1" id="skillsGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     PROJECTS
+════════════════════════════════════ -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="section-label">Portafolio</p>
+      <h2 class="section-title">Proyectos Destacados</h2>
+      <p class="section-sub">Una selección de análisis, dashboards y pipelines — desde datos crudos hasta decisiones reales.</p>
+    </div>
+    <div class="projects-grid" id="projectsGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     EXPERIENCE
+════════════════════════════════════ -->
+<section id="experience">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="section-label">Trayectoria</p>
+      <h2 class="section-title">Experiencia Laboral</h2>
+      <p class="section-sub">Un historial de trabajo en entornos reales — con resultados medibles y aprendizaje continuo.</p>
+    </div>
+    <div class="timeline" id="timeline"></div>
+    <div class="testimonial-wrap fade-up" id="testimonialBlock"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CERTIFICATIONS
+════════════════════════════════════ -->
+<section id="certifications">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="section-label">Credenciales</p>
+      <h2 class="section-title">Certificaciones</h2>
+      <p class="section-sub">Credenciales verificadas de plataformas líderes — cada una refleja una habilidad real puesta en práctica.</p>
+    </div>
+    <div class="certs-grid" id="certsGrid"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     CONTACT
+════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="section-head fade-up">
+      <p class="section-label">Hablemos</p>
+      <h2 class="section-title">Contáctame</h2>
+      <p class="section-sub">Disponible para posiciones de tiempo completo, proyectos freelance y colaboraciones interesantes. Generalmente respondo en menos de 24 horas.</p>
+    </div>
+
+    <div class="contact-grid fade-up delay-1">
+
+      <!-- Form — powered by Netlify Forms out of the box -->
+      <form class="contact-form" id="contactForm" name="contact" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="contact"/>
+        <!-- Honeypot -->
+        <p hidden><label>No llenar: <input name="bot-field"/></label></p>
+
+        <div class="form-field">
+          <label for="fname">Nombre</label>
+          <input type="text" id="fname" name="name" placeholder="Tu nombre completo" required/>
+        </div>
+        <div class="form-field">
+          <label for="femail">Correo</label>
+          <input type="email" id="femail" name="email" placeholder="tu@correo.com" required/>
+        </div>
+        <div class="form-field">
+          <label for="fmessage">Mensaje</label>
+          <textarea id="fmessage" name="message" placeholder="Cuéntame sobre la oportunidad o proyecto…" required></textarea>
+        </div>
+
+        <button type="submit" class="form-submit" id="submitBtn">Enviar mensaje →</button>
+        <div class="form-success" id="formSuccess">✓ ¡Mensaje enviado! Te responderé pronto.</div>
+      </form>
+
+      <!-- Info sidebar -->
+      <div class="contact-sidebar">
+        <div class="contact-block">
+          <div class="contact-block-title">Encuéntrame en línea</div>
+          <div class="contact-links">
+            <a href="#" class="contact-link" id="contactEmail">
+              <span class="contact-link-icon">✉</span>
+              <span id="contactEmailTxt"></span>
+            </a>
+            <a href="#" class="contact-link" id="contactLinkedIn" target="_blank" rel="noopener">
+              <span class="contact-link-icon" style="font-size:0.75rem;font-weight:600">in</span>
+              <span id="contactLinkedInTxt"></span>
+            </a>
+            <a href="#" class="contact-link" id="contactGithub" target="_blank" rel="noopener">
+              <span class="contact-link-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              </span>
+              <span id="contactGithubTxt"></span>
+            </a>
+          </div>
+        </div>
+
+        <div class="contact-block">
+          <div class="contact-block-title">Disponibilidad y ubicación</div>
+          <p style="font-size:0.9375rem;color:var(--text-muted);line-height:1.7">
+            Disponible para posiciones <strong style="color:var(--text)">remotas de tiempo completo</strong> e <strong style="color:var(--text)">híbridas</strong> en ingeniería de datos, analytics o BI.<br/>
+            <span id="contactLocation" style="margin-top:0.375rem;display:block"></span>
+          </p>
+        </div>
+
+        <div class="contact-block">
+          <div class="contact-block-title">Stack preferido</div>
+          <div class="stack-chips" id="preferredStack"></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Diseñado y construido por <strong id="footerName"></strong> · <span id="footerYear"></span></p>
+</footer>
+
+<!-- PROJECT MODAL -->
+<div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-label="Detalles del proyecto">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<!-- Back to top -->
+<button id="backTop" aria-label="Volver arriba">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<!-- Script -->
+<script src="/assets/js/main.js" defer></script>
+</body>
+</html>

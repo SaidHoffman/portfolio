@@ -1,0 +1,16 @@
+{
+  "name": "Said Sigala Morales",
+  "initials": "SS",
+  "title": "Ingeniero de Datos | ETL/ELT · Airflow · dbt · GCP",
+  "tagline": "Disponible para nuevas oportunidades",
+  "shortBio": "Construyo pipelines de datos de extremo a extremo — desde la ingesta hasta flujos orquestados y despliegues en la nube. Enfocado en arquitectura limpia, resultados medibles y sistemas en los que los equipos pueden confiar.",
+  "email": "saidsigala14@gmail.com",
+  "linkedin": "https://linkedin.com/in/saidsigala",
+  "github": "https://github.com/SaidHoffman",
+  "cv": "/assets/cv.pdf",
+  "location": "Gustavo A. Madero, Ciudad de México 🇲🇽",
+  "available": true,
+  "preferredStack": ["Python", "SQL", "Apache Airflow", "dbt", "BigQuery", "Docker"],
+  "photo": "/assets/images/foto1.jpg",
+  "photoAbout": "/assets/images/foto2.jpg"
+}

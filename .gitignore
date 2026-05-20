@@ -1,0 +1,13 @@
+# Claude Code settings
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+*.swp
+
+# Assets never committed (add manually before deploy)
+assets/cv.pdf

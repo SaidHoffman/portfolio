@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "title": "Weather Data Pipeline",
+    "shortDesc": "Pipeline ELT de extremo a extremo que ingesta datos climáticos en tiempo real cada 5 minutos vía la API de Weatherstack, orquestado con Apache Airflow y visualizado en Apache Superset.",
+    "longDesc": "Construí un pipeline ELT completamente contenedorizado que obtiene datos climáticos en vivo de la API de Weatherstack cada 5 minutos, los carga en PostgreSQL y los transforma con dbt. La orquestación corre en Apache Airflow con un DAG que usa PythonOperator y DockerOperator, logrando una latencia de disponibilidad de datos menor a 1 minuto. Los modelos de staging en dbt eliminaron el 100% de los duplicados usando funciones de ventana SQL (ROW_NUMBER()), y los modelos de reporte con agregaciones diarias (promedios de temperatura y viento) redujeron el volumen de datos procesados en ~35%. Dashboards interactivos en Apache Superset muestran métricas en tiempo real con gráficos de dispersión y series de tiempo para análisis exploratorio. Todo el entorno está contenedorizado con Docker sobre WSL/Ubuntu y versionado con Git.",
+    "tags": ["Python", "Apache Airflow", "dbt", "PostgreSQL", "Apache Superset", "Docker", "REST API"],
+    "thumbColor": "#EAF5F1",
+    "thumbAccent": "#2D8C6E",
+    "screenshots": [],
+    "dataset": "API Weatherstack · ingesta en tiempo real cada 5 min",
+    "duration": "En curso",
+    "role": "Ingeniero de Datos (proyecto personal)",
+    "outcome": "<1 min de latencia · 35% reducción de volumen · 100% eliminación de duplicados",
+    "github": "https://github.com/SaidHoffman/weather-data-project",
+    "demo": "",
+    "articleUrl": "",
+    "thumbMetric": "<1 min latencia"
+  },
+  {
+    "id": 2,
+    "title": "Argon2Net — Biblioteca Python con Deep Learning",
+    "shortDesc": "Biblioteca Python con arquitectura BiLSTM que aprende a aproximar funciones de derivación de claves criptográficas. Aprobó 13/15 pruebas NIST SP 800-22 (86.67%) con 5 ms de inferencia promedio. Trabajo Terminal — Propuesto a Mención Honorífica.",
+    "longDesc": "Argon2Net es el Trabajo Terminal de mi carrera (Propuesto a Mención Honorífica), una biblioteca Python basada en una red neuronal BiLSTM que aprende a aproximar la función de derivación de claves Argon2id mediante aprendizaje supervisado.<br><br><strong>Pipeline ETL:</strong> Diseñé un pipeline modular en Python que procesó 2 millones de contraseñas del repositorio público SecLists, generando salts aleatorios de 128 bits vía CSPRNG y derivando claves objetivo con Argon2id (2 iteraciones, 64 MB de memoria, 4 hilos). Los registros se almacenaron en CSV estructurado optimizado para Pandas y NumPy.<br><br><strong>Arquitectura BiLSTM:</strong> Encoder de contraseña con embedding (dim 128) + positional encoding + BiLSTM bidireccional (2 capas, 64 unidades/dirección) → vector 128 dim. Encoder de salt con red feed-forward [128→256→256→128] + ReLU + Dropout 0.3 → vector 128 dim. Ambos vectores se concatenan y pasan por un MLP [256→256→128] con activación Sigmoid para generar la clave de 128 bits.<br><br><strong>Entrenamiento:</strong> Función de pérdida híbrida (BCE + balance de bits + distribución de transiciones), optimizador Adam (lr=0.001), batch 512, 25 épocas con early stopping. Mejor checkpoint en época 21. Hardware: NVIDIA GPU con CUDA, PyTorch 2.0.<br><br><strong>Resultados:</strong> 86.67% de aprobación NIST SP 800-22 (13/15 pruebas), 5 ms de inferencia promedio, 21 pruebas unitarias al 100%. Las fallas en DFT (Spectral) y Non-Overlapping Template evidencian un efecto avalancha débil (4.30% vs 50% ideal) — limitación reconocida y documentada: las redes neuronales pueden aproximar KDFs con precisión estadística razonable, pero aún no reemplazan funciones criptográficas diseñadas matemáticamente.",
+    "tags": ["Python", "PyTorch", "BiLSTM", "Deep Learning", "ETL", "NumPy", "Pandas", "NIST SP 800-22"],
+    "thumbColor": "#EEF4FF",
+    "thumbAccent": "#3B5FD4",
+    "screenshots": [],
+    "dataset": "2,000,000 contraseñas (SecLists) · salts CSPRNG 128 bits · claves Argon2id",
+    "duration": "Un semestre",
+    "role": "Ingeniero líder (Trabajo Terminal)",
+    "outcome": "86.67% aprobación NIST SP 800-22 (13/15) · 5 ms inferencia · 21 pruebas unitarias al 100% · Propuesto a Mención Honorífica",
+    "github": "",
+    "demo": "",
+    "articleUrl": "/assets/material/ArticuloTT_2025-B144%20(1).pdf",
+    "thumbMetric": "86.67% NIST SP 800-22"
+  }
+]

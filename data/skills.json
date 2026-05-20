@@ -1,0 +1,26 @@
+[
+  {
+    "category": "Lenguajes y Consultas",
+    "items": ["Python", "SQL", "Bash"]
+  },
+  {
+    "category": "Stack de Datos y Orquestación",
+    "items": ["Apache Airflow", "dbt", "PostgreSQL", "Apache Superset", "Pandas", "NumPy", "SciPy"]
+  },
+  {
+    "category": "Nube",
+    "items": ["GCP BigQuery", "GCP Dataflow", "GCP Cloud Storage", "Azure"]
+  },
+  {
+    "category": "APIs e Integración",
+    "items": ["REST APIs", "requests", "Validación JSON", "psycopg2"]
+  },
+  {
+    "category": "ML y Ciencia de Datos",
+    "items": ["Scikit-learn", "Matplotlib", "BiLSTM / Deep Learning"]
+  },
+  {
+    "category": "Infraestructura y Herramientas",
+    "items": ["Docker", "Git", "Linux / WSL (Ubuntu)", "Jupyter"]
+  }
+]
