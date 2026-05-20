@@ -396,12 +396,20 @@ function initContactForm() {
     btn.disabled = true;
     btn.textContent = 'Enviando…';
 
-    // Simulate / replace with your form provider endpoint (Netlify Forms, Formspree, etc.)
-    await new Promise(r => setTimeout(r, 900));
-
-    btn.style.display = 'none';
-    success.style.display = 'block';
-    form.reset();
+    try {
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(new FormData(form)).toString(),
+      });
+      btn.style.display = 'none';
+      success.style.display = 'block';
+      form.reset();
+    } catch {
+      btn.disabled = false;
+      btn.textContent = 'Enviar mensaje →';
+      alert('Error al enviar. Intenta de nuevo o escríbeme directo a saidsigala14@gmail.com');
+    }
   });
 }
 
