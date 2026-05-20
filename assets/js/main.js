@@ -397,17 +397,22 @@ function initContactForm() {
     btn.textContent = 'Enviando…';
 
     try {
-      await fetch('/', {
+      const res = await fetch('/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(new FormData(form)).toString(),
       });
-      btn.style.display = 'none';
-      success.style.display = 'block';
-      form.reset();
-    } catch {
+      if (res.ok) {
+        btn.style.display = 'none';
+        success.style.display = 'block';
+        form.reset();
+      } else {
+        throw new Error(`status ${res.status}`);
+      }
+    } catch (err) {
       btn.disabled = false;
       btn.textContent = 'Enviar mensaje →';
+      console.error('Form error:', err);
       alert('Error al enviar. Intenta de nuevo o escríbeme directo a saidsigala14@gmail.com');
     }
   });

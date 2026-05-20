@@ -4,12 +4,6 @@
   publish = "."        # Root folder is the published site
   command = ""         # No build step needed (pure static site)
 
-# SPA redirect — all routes go back to index.html
-[[redirects]]
-  from = "/*"
-  to   = "/index.html"
-  status = 200
-
 # Security & performance headers
 [[headers]]
   for = "/*"
