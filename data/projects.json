@@ -34,5 +34,26 @@
     "demo": "",
     "articleUrl": "/assets/material/ArticuloTT_2025-B144%20(1).pdf",
     "thumbMetric": "86.67% NIST SP 800-22"
+  },
+  {
+    "id": 3,
+    "title": "LigaMX Intelligence — Plataforma Analytics",
+    "shortDesc": "Plataforma analytics end-to-end sobre 8 temporadas de Liga MX (2016–2024): pipeline dbt + DuckDB, rating ELO dinámico, clasificador XGBoost multiclase y 5,000 simulaciones Monte Carlo con dashboard interactivo en Streamlit.",
+    "longDesc": "Plataforma de analytics aplicada a la Liga MX que cubre desde la ingesta de datos hasta la predicción de campeón, combinando ingeniería de datos, modelado dimensional con dbt y machine learning.<br><br><strong>Pipeline de datos:</strong> Ingesta automatizada desde Kaggle vía kagglehub, carga a DuckDB (base de datos OLAP embebida) en capa raw, y 6 modelos dbt distribuidos en tres capas — staging (<code>stg_matches</code>), intermediate (<code>int_team_season_stats</code>, <code>int_h2h_stats</code>) y marts (<code>mart_standings</code>, <code>mart_team_profiles</code>, <code>mart_season_results</code>). Tests de calidad dbt validan nulos, unicidad y valores aceptados. Orquestación con Prefect en un pipeline de 8 pasos con tiempo de ejecución de 3–8 minutos.<br><br><strong>Sistema ELO dinámico:</strong> Rating ELO con K=32 y +50 de ventaja local, recalculado partido a partido a lo largo de 8 temporadas (~2,250 partidos). Los ratings ELO junto con estadísticas rolling de los últimos 5 partidos conforman las 9 features del modelo.<br><br><strong>Modelo XGBoost:</strong> Clasificador multiclase entrenado sobre ~1,900 partidos (2016–2022) y validado en ~350 partidos (2023), con 300 estimadores y 3 clases de salida (local / empate / visitante).<br><br><strong>Simulaciones Monte Carlo:</strong> El predictor ejecuta 5,000 iteraciones por escenario para estimar la distribución de probabilidades de campeonato con intervalos de confianza por equipo.<br><br><strong>Dashboard Streamlit:</strong> 5 páginas interactivas con Plotly — Home (KPIs y distribución histórica), Clasificación (evolución jornada a jornada), Equipos (radar charts en 4 dimensiones + historial H2H), ELO (ranking dinámico temporal) y Predictor (simulador Monte Carlo + predictor de partido individual).",
+    "tags": ["Python", "dbt", "DuckDB", "XGBoost", "Prefect", "Streamlit", "Plotly", "Monte Carlo"],
+    "thumbColor": "#FFF7ED",
+    "thumbAccent": "#C2410C",
+    "screenshots": [
+      "/assets/images/ligamx-1.png",
+      "/assets/images/ligamx-2.png"
+    ],
+    "dataset": "Kaggle · 8 temporadas Liga MX · ~2,250 partidos (2016–2024)",
+    "duration": "Proyecto personal",
+    "role": "Ingeniero de Datos / ML (proyecto personal)",
+    "outcome": "~2,250 partidos procesados · 6 modelos dbt · ELO dinámico · XGBoost multiclase · 5,000 sims Monte Carlo",
+    "github": "https://github.com/SaidHoffman/LIGAMX",
+    "demo": "",
+    "articleUrl": "",
+    "thumbMetric": "5,000 sims Monte Carlo"
   }
 ]

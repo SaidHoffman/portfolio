@@ -336,6 +336,7 @@ h1 em { color: var(--accent); font-style: italic; }
 
 /* ─── PROJECTS ─── */
 .projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.projects-grid .project-card:last-child:nth-child(odd) { grid-column: 1 / -1; max-width: 560px; justify-self: center; width: 100%; }
 .project-card {
   background: var(--surface); border: 1px solid var(--border);
   border-radius: var(--radius); overflow: hidden;
