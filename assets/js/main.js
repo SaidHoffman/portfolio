@@ -67,7 +67,9 @@ function renderHero(cfg, about) {
   $('#heroBio').textContent = cfg.shortBio;
 
   // CTA links
-  $('#heroCvLink').href = cfg.cv;
+  const cvLink = $('#heroCvLink');
+  cvLink.href = cfg.cv;
+  cvLink.setAttribute('download', '');
   $('#heroProjectsLink').href = '#projects';
 
   // Socials

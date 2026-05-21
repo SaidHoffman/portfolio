@@ -1,0 +1,142 @@
+%% CV — Said Sigala Morales
+%% Optimizado ATS · Una página
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[top=0.85cm, bottom=0.85cm, left=1.1cm, right=1.1cm]{geometry}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\renewcommand{\familydefault}{\sfdefault}
+\linespread{1.06}
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% Section format
+\titleformat{\section}
+  {\normalsize\bfseries\uppercase}
+  {}{0em}{}[\titlerule]
+\titlespacing{\section}{0pt}{8pt}{4pt}
+
+% Bullet spacing
+\setlist[itemize]{leftmargin=1.4em, itemsep=2pt, topsep=2pt, parsep=0pt}
+
+\begin{document}
+
+% ─── HEADER ────────────────────────────────────────────────────────────────────
+\begin{center}
+  {\Huge\bfseries Said Sigala Morales}\\[4pt]
+  \small
+  \href{mailto:saidsigala14@gmail.com}{saidsigala14@gmail.com}
+  \textperiodcentered\ +52 55 7803 3729
+  \textperiodcentered\ \href{https://www.linkedin.com/in/saidsigala}{linkedin.com/in/saidsigala}
+  \textperiodcentered\ Miguel Hidalgo, Ciudad de M\'{e}xico\\[3pt]
+  {\normalsize\bfseries Portafolio:}\;
+  \href{https://said-sigala.netlify.app/}{\large\textbf{said-sigala.netlify.app}}
+\end{center}
+
+% ─── PERFIL PROFESIONAL ────────────────────────────────────────────────────────
+\section{Perfil Profesional}
+
+Ingeniero en Sistemas Computacionales (ESCOM--IPN) con experiencia en QA de portales web,
+pipelines ETL/ELT y modelos de clasificaci\'{o}n. He validado ciclos completos de prueba con
+cobertura del 100\,\%, construido pipelines sobre m\'{a}s de 2 millones de registros, orquestado
+flujos con Apache Airflow, transformado datos con dbt y SQL, y trabajado con GCP
+(BigQuery, Dataflow), scikit-learn y Docker. Orientado a la calidad y documentaci\'{o}n t\'{e}cnica.
+
+% ─── EDUCACI\'{O}N ────────────────────────────────────────────────────────────────
+\section{Educaci\'{o}n}
+
+\begin{itemize}
+  \item \textbf{Escuela Superior de C\'{o}mputo (ESCOM) -- IPN} \hfill Ciudad de M\'{e}xico\\
+        Ingenier\'{i}a en Sistemas Computacionales · Promedio 9.02/10 · \textit{Carta Pasante}
+        \hfill Ago 2021 -- Jun 2026 (Esperado)
+  \item \textbf{CECyT 8 ``Narciso Bassols'' -- IPN} \hfill Ciudad de M\'{e}xico\\
+        T\'{e}cnico en Computaci\'{o}n \hfill 2018 -- 2021
+\end{itemize}
+
+% ─── EXPERIENCIA PROFESIONAL ──────────────────────────────────────────────────
+\section{Experiencia Profesional}
+
+\begin{itemize}
+  \item \textbf{Am\'{e}rica M\'{o}vil Contenido (Grupo Carso)} \hfill Ciudad de M\'{e}xico\\
+        \textit{Becario QA Tester} \hfill Oct 2025 -- Abr 2026
+        \begin{itemize}
+          \item Ejecut\'{e} m\'{a}s de \textbf{120 casos de prueba} funcionales y de regresi\'{o}n en
+                portales web Marca Claro (Latinoam\'{e}rica), logrando \textbf{100\,\%} de cobertura
+                de requerimientos por sprint con documentaci\'{o}n completa de resultados.
+          \item Implement\'{e} plantillas estandarizadas de reporte que redujeron el tiempo de
+                cierre de incidencias en $\sim$\textbf{25\,\%}, garantizando trazabilidad completa
+                desde detecci\'{o}n hasta resoluci\'{o}n.
+        \end{itemize}
+
+  \item \textbf{Instituto Polit\'{e}cnico Nacional -- ESCOM} \hfill Ciudad de M\'{e}xico\\
+        \textit{Servicio Social --- Procesamiento Digital de Se\~{n}ales} \hfill Mar 2025 -- Sep 2025
+        \begin{itemize}
+          \item Increment\'{e} la precisi\'{o}n en clasificaci\'{o}n de se\~{n}ales ac\'{u}sticas en un
+                \textbf{15\,\%} automatizando reportes con Python (Pandas, Matplotlib).
+          \item Reduje la interferencia en un \textbf{20\,\%} con filtros NumPy/SciPy sobre
+                m\'{a}s de \textbf{50\,000 muestras de audio}, recortando el tiempo de an\'{a}lisis en $\sim$60\,\%.
+        \end{itemize}
+\end{itemize}
+
+% ─── PROYECTOS DESTACADOS ─────────────────────────────────────────────────────
+\section{Proyectos Destacados}
+
+\begin{itemize}
+
+  \item \textbf{Weather Data Pipeline --- ELT en Tiempo Real} \hfill \textit{Proyecto Personal}\\
+        \textit{Python · PostgreSQL · dbt · Apache Airflow · Apache Superset · Docker}
+        \begin{itemize}
+          \item Pipeline ELT contenedorizado que ingesta datos de la \textbf{API Weatherstack}
+                cada 5 min (latencia $<$1 min) orquestado con \textbf{Apache Airflow} (DAGs, DockerOperator).
+          \item Modelos \textbf{dbt} eliminaron el 100\,\% de duplicados (\texttt{ROW\_NUMBER()})
+                y redujeron el volumen procesado en $\sim$35\,\%.
+        \end{itemize}
+
+  \item \textbf{LigaMX Intelligence --- Analytics Platform} \hfill \textit{Proyecto Personal}\\
+        \textit{Python · dbt · DuckDB · XGBoost · Prefect · Streamlit · Plotly}
+        \begin{itemize}
+          \item Pipeline end-to-end sobre \textbf{2,813 partidos} (2016--2024): 6 modelos dbt,
+                rating ELO din\'{a}mico (K=32) y clasificador XGBoost multiclase.
+          \item Simulador Monte Carlo de \textbf{5,000 iteraciones} para probabilidades de
+                campeonato; dashboard Streamlit con 5 m\'{o}dulos interactivos.
+        \end{itemize}
+
+  \item \textbf{Argon2Net --- Pipeline ETL y Deep Learning} \hfill \textit{Trabajo Terminal}
+        \begin{itemize}
+          \item Pipeline ETL modular sobre \textbf{2\,000\,000 de registros}; red BiLSTM con
+                \textbf{86.67\,\%} de aprobaci\'{o}n NIST SP 800-22 e inferencia de \textbf{5 ms}.
+                Propuesto a Menci\'{o}n Honor\'{i}fica.
+        \end{itemize}
+\end{itemize}
+
+% ─── HABILIDADES T\'{E}CNICAS ─────────────────────────────────────────────────────
+\section{Habilidades T\'{e}cnicas}
+
+\begin{itemize}
+  \item \textbf{QA / Testing:} Pruebas funcionales y de regresi\'{o}n · Documentaci\'{o}n de bugs
+        · Cobertura de requerimientos · Metodolog\'{i}as \'{A}gil
+  \item \textbf{ML / Deep Learning:} Scikit-learn · Redes BiLSTM · XGBoost · Feature Engineering
+  \item \textbf{Lenguajes y SQL:} Python (ETL/ELT, automatizaci\'{o}n, \texttt{requests}, \texttt{psycopg2})
+        · SQL (JOINs, CTEs, funciones de ventana)
+  \item \textbf{Data Engineering:} Apache Airflow · dbt · PostgreSQL · DuckDB · Pandas · NumPy
+        · SciPy · Apache Superset · Prefect · APIs REST
+  \item \textbf{Cloud e Infraestructura:} GCP (BigQuery, Dataflow) · Azure (b\'{a}sico) · Docker · Git · Linux
+\end{itemize}
+
+% ─── CERTIFICACIONES ──────────────────────────────────────────────────────────
+\section{Certificaciones}
+
+\begin{itemize}
+  \item \textbf{DeepLearning.AI / Stanford:} Supervised Machine Learning: Regression and Classification (2026)
+  \item \textbf{Google Cloud (2025--2026):}
+        ETL Processing on GCP (Dataflow \& BigQuery) · Introduction to Data Engineering on GCP
+        · Prepare Data for ML APIs · Build a Secure GCP Network · GCP Computing Foundations
+  \item \textbf{HackerRank (2025):} Problem Solving (Gold) · Python Professional · SQL Intermediate
+\end{itemize}
+
+\end{document}
