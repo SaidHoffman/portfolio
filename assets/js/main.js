@@ -186,7 +186,7 @@ function renderProjects(projects) {
                <span class="project-thumb-name">${p.tags.slice(0, 3).join(' · ')}</span>
              </div>`
         }
-        <span class="project-thumb-dataset" style="color:${p.thumbAccent}">${p.dataset}</span>
+        <span class="project-thumb-dataset" style="${p.screenshots[0] ? 'color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.7)' : `color:${p.thumbAccent}`}">${p.dataset}</span>
       </div>
       <div class="project-body">
         <div class="project-chips">${p.tags.map(t => `<span class="chip">${t}</span>`).join('')}</div>
