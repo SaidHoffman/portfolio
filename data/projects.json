@@ -38,22 +38,24 @@
   {
     "id": 3,
     "title": "LigaMX Intelligence — Plataforma Analytics",
-    "shortDesc": "Plataforma analytics end-to-end sobre 8 temporadas de Liga MX (2016–2024): pipeline dbt + DuckDB, rating ELO dinámico, clasificador XGBoost multiclase y 5,000 simulaciones Monte Carlo con dashboard interactivo en Streamlit.",
-    "longDesc": "Plataforma de analytics aplicada a la Liga MX que cubre desde la ingesta de datos hasta la predicción de campeón, combinando ingeniería de datos, modelado dimensional con dbt y machine learning.<br><br><strong>Pipeline de datos:</strong> Ingesta automatizada desde Kaggle vía kagglehub, carga a DuckDB (base de datos OLAP embebida) en capa raw, y 6 modelos dbt distribuidos en tres capas — staging (<code>stg_matches</code>), intermediate (<code>int_team_season_stats</code>, <code>int_h2h_stats</code>) y marts (<code>mart_standings</code>, <code>mart_team_profiles</code>, <code>mart_season_results</code>). Tests de calidad dbt validan nulos, unicidad y valores aceptados. Orquestación con Prefect en un pipeline de 8 pasos con tiempo de ejecución de 3–8 minutos.<br><br><strong>Sistema ELO dinámico:</strong> Rating ELO con K=32 y +50 de ventaja local, recalculado partido a partido a lo largo de 8 temporadas (~2,250 partidos). Los ratings ELO junto con estadísticas rolling de los últimos 5 partidos conforman las 9 features del modelo.<br><br><strong>Modelo XGBoost:</strong> Clasificador multiclase entrenado sobre ~1,900 partidos (2016–2022) y validado en ~350 partidos (2023), con 300 estimadores y 3 clases de salida (local / empate / visitante).<br><br><strong>Simulaciones Monte Carlo:</strong> El predictor ejecuta 5,000 iteraciones por escenario para estimar la distribución de probabilidades de campeonato con intervalos de confianza por equipo.<br><br><strong>Dashboard Streamlit:</strong> 5 páginas interactivas con Plotly — Home (KPIs y distribución histórica), Clasificación (evolución jornada a jornada), Equipos (radar charts en 4 dimensiones + historial H2H), ELO (ranking dinámico temporal) y Predictor (simulador Monte Carlo + predictor de partido individual).",
+    "shortDesc": "Pipeline end-to-end sobre 2,813 partidos de Liga MX (2016–2024): arquitectura medallion con dbt + DuckDB, rating ELO recalibrado partido a partido, XGBoost multiclase y simulador Monte Carlo de 5,000 iteraciones con dashboard Streamlit de 5 módulos.",
+    "longDesc": "Plataforma de inteligencia deportiva que modela 8 temporadas completas de la Liga MX combinando ingeniería de datos, modelado dimensional y machine learning en un pipeline orquestado con Prefect.<br><br><strong>Arquitectura medallion con DuckDB:</strong> Elegí DuckDB sobre PostgreSQL por su motor columnar OLAP embebido — sin servidor, sin configuración, con rendimiento de escaneo analítico superior para agregaciones sobre millones de filas. La capa raw ingesta los datos de Kaggle via kagglehub; dbt transforma en 3 capas: staging (<code>stg_matches</code>), intermediate (<code>int_team_season_stats</code>, <code>int_h2h_stats</code>) y marts (<code>mart_standings</code>, <code>mart_team_profiles</code>, <code>mart_season_results</code>). Cada modelo tiene tests automáticos de <code>not_null</code>, <code>unique</code>, <code>accepted_values</code> y <code>relationships</code>. Prefect orquesta los 8 pasos del pipeline en 3–8 minutos de ejecución total.<br><br><strong>Rating ELO dinámico:</strong> Implementé el algoritmo ELO (K=32, +50 puntos de ventaja local) procesando los 2,813 partidos en orden cronológico. La clave del diseño: el ELO captura dinámica temporal que las estadísticas acumuladas ignoran — un equipo en racha positiva tiene un rating diferente al mismo equipo en baja forma, aunque sus totales de temporada sean idénticos. Este rating, junto con estadísticas rolling de los últimos 5 partidos (goles anotados, recibidos, puntos), forma las 9 features del modelo.<br><br><strong>Clasificador XGBoost multiclase:</strong> Entrenado sobre ~1,900 partidos (2016–2022) y validado en ~350 (temporada 2023). 300 estimadores con salida de 3 clases — victoria local, empate y victoria visitante. Las probabilidades por clase alimentan directamente el simulador Monte Carlo.<br><br><strong>Simulador Monte Carlo:</strong> Por cada escenario, el motor ejecuta 5,000 iteraciones: en cada una muestrea el resultado de cada partido pendiente según las probabilidades XGBoost, acumula puntos, resuelve desempates y registra el campeón. El output es una distribución de probabilidad de título por equipo — no una predicción puntual, sino la incertidumbre real de una temporada modelada estadísticamente.<br><br><strong>Dashboard Streamlit + Plotly:</strong> 5 módulos — KPIs históricos (2,813 partidos · 7,476 goles · 2.66 goles/partido · 23 equipos), clasificación con evolución jornada a jornada, perfiles de equipos con radar charts (4 dimensiones) e historial head-to-head, ranking ELO dinámico con series de tiempo por equipo, y Predictor con vista de partido individual y simulación de temporada completa.",
     "tags": ["Python", "dbt", "DuckDB", "XGBoost", "Prefect", "Streamlit", "Plotly", "Monte Carlo"],
     "thumbColor": "#FFF7ED",
     "thumbAccent": "#C2410C",
     "screenshots": [
-      "/assets/images/ligamx-1.png",
-      "/assets/images/ligamx-2.png"
+      "/assets/images/caputra1.png",
+      "/assets/images/captura2.png",
+      "/assets/images/captura3.png",
+      "/assets/images/captura4.png"
     ],
-    "dataset": "Kaggle · 8 temporadas Liga MX · ~2,250 partidos (2016–2024)",
+    "dataset": "Kaggle · 8 temporadas Liga MX · 2,813 partidos · 23 equipos (2016–2024)",
     "duration": "Proyecto personal",
     "role": "Ingeniero de Datos / ML (proyecto personal)",
-    "outcome": "~2,250 partidos procesados · 6 modelos dbt · ELO dinámico · XGBoost multiclase · 5,000 sims Monte Carlo",
+    "outcome": "2,813 partidos · 7,476 goles · 6 modelos dbt · ELO dinámico · XGBoost multiclase · 5,000 sims Monte Carlo",
     "github": "https://github.com/SaidHoffman/LIGAMX",
     "demo": "",
     "articleUrl": "",
-    "thumbMetric": "5,000 sims Monte Carlo"
+    "thumbMetric": "2,813 partidos"
   }
 ]
