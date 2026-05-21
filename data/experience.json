@@ -17,8 +17,8 @@
     "company": "Instituto Politécnico Nacional – ESCOM",
     "role": "Servicio Social — Procesamiento Digital de Señales",
     "type": "Servicio Social",
-    "startDate": "Sep 2024",
-    "endDate": "Mar 2025",
+    "startDate": "Mar 2025",
+    "endDate": "Sep 2025",
     "bullets": [
       "Incrementé la precisión en clasificación de señales acústicas en un 15% automatizando la generación de reportes técnicos y métricas de desempeño con Python (Pandas, Matplotlib).",
       "Reduje la interferencia de señal en un 20% desarrollando filtros de reducción de ruido y algoritmos de optimización con NumPy y SciPy aplicados a conjuntos de datos de audio del IPN.",
