@@ -1,593 +1,608 @@
-/* ============================================================
-   PORTFOLIO — main.js
-   Fetches all JSON data files and renders the entire site.
-   ============================================================ */
+/* ==========================================================================
+   Said Sigala · Portafolio
+   Todo el contenido vive en /data/*.json (español e inglés).
+   ========================================================================== */
+(() => {
+  'use strict';
 
-/* ─── UTILS ─── */
-const $ = (sel, ctx = document) => ctx.querySelector(sel);
-const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+  /* ---------- Textos de la interfaz ---------- */
+  const I18N = {
+    es: {
+      'nav.featured': 'Argon2Net',
+      'nav.projects': 'Proyectos',
+      'nav.experience': 'Experiencia',
+      'nav.about': 'Sobre mí',
+      'nav.certs': 'Certificaciones',
+      'nav.contact': 'Contacto',
+      'ui.theme': 'Cambiar tema claro u oscuro',
+      'ui.menu': 'Abrir menú',
+      'ui.close': 'Cerrar',
+      'hero.available': 'Disponible para nuevas oportunidades',
+      'hero.cta': 'Ver proyectos',
+      'hero.cv': 'Descargar CV',
+      'term.file': 'perfil.yml',
+      'sec.featured.k': 'proyecto estrella',
+      'sec.featured.t': 'Mi Trabajo Terminal',
+      'sec.projects.k': 'proyectos',
+      'sec.projects.t': 'Proyectos de datos',
+      'sec.projects.s': 'Pipelines que armé de principio a fin. Cada uno tiene su código y README en GitHub.',
+      'sec.exp.k': 'experiencia',
+      'sec.exp.t': 'Dónde he trabajado',
+      'sec.about.k': 'sobre mí',
+      'sec.about.t': 'Formación y stack',
+      'sec.certs.k': 'certificaciones',
+      'sec.certs.t': 'Certificaciones',
+      'sec.contact.k': 'contacto',
+      'sec.contact.t': 'Hablemos',
+      'sec.contact.s': '¿Tienes una vacante, un proyecto o una pregunta? Escríbeme y te respondo pronto.',
+      'featured.results': 'Resultados',
+      'featured.nist': 'Pruebas NIST SP 800-22',
+      'featured.pass': 'aprobada',
+      'featured.fail': 'no aprobada',
+      'featured.aval': 'Efecto avalancha',
+      'featured.aval.pw': 'Contraseña',
+      'featured.aval.salt': 'Salt',
+      'featured.aval.avg': 'Promedio',
+      'featured.aval.note': 'Bits que cambian al modificar 1 carácter o 1 bit. La línea marca el 50 % ideal.',
+      'featured.paper': 'Leer el artículo',
+      'featured.how': 'Cómo lo hicimos',
+      'card.details': 'Ver detalles',
+      'card.code': 'Código',
+      'card.demo': 'Dashboard en vivo',
+      'arch.title': 'Arquitectura del modelo',
+      'arch.pw': 'Contraseña',
+      'arch.salt': 'Salt · 128 bits',
+      'arch.concat': 'Concatenación',
+      'arch.out': 'Clave · 128 bits',
+      'exp.letter': 'Carta de recomendación',
+      'edu.gpa': 'Promedio',
+      'cert.verify': 'Verificar',
+      'form.name': 'nombre',
+      'form.name.ph': 'Tu nombre',
+      'form.email': 'correo',
+      'form.email.ph': 'tu@correo.com',
+      'form.msg': 'mensaje',
+      'form.msg.ph': 'Cuéntame de la vacante o del proyecto…',
+      'form.send': 'Enviar mensaje',
+      'form.sending': 'Enviando…',
+      'form.ok': 'Listo, recibí tu mensaje. Te respondo pronto.',
+      'form.err': 'No se pudo enviar. Escríbeme directo a saidsigala14@gmail.com.',
+      'contact.find': 'Encuéntrame en',
+      'contact.avail.t': 'Disponibilidad',
+      'contact.avail': 'Busco posiciones de <strong>Data Engineer</strong> o <strong>Analytics Engineer</strong>, remotas o híbridas, de tiempo completo.',
+      'footer.built': 'Diseñado y construido por',
+      'footer.top': 'volver arriba ↑',
+      'meta.title': 'Said Sigala · Ingeniero de Datos',
+      'meta.desc': 'Said Sigala Morales, ingeniero de datos. Pipelines ETL/ELT con Airflow, dbt y Google Cloud.'
+    },
+    en: {
+      'nav.featured': 'Argon2Net',
+      'nav.projects': 'Projects',
+      'nav.experience': 'Experience',
+      'nav.about': 'About',
+      'nav.certs': 'Certifications',
+      'nav.contact': 'Contact',
+      'ui.theme': 'Toggle light or dark theme',
+      'ui.menu': 'Open menu',
+      'ui.close': 'Close',
+      'hero.available': 'Open to new opportunities',
+      'hero.cta': 'See projects',
+      'hero.cv': 'Download CV',
+      'term.file': 'profile.yml',
+      'sec.featured.k': 'featured project',
+      'sec.featured.t': 'My undergraduate thesis',
+      'sec.projects.k': 'projects',
+      'sec.projects.t': 'Data projects',
+      'sec.projects.s': 'Pipelines I built end to end. Each one has its code and README on GitHub.',
+      'sec.exp.k': 'experience',
+      'sec.exp.t': 'Where I have worked',
+      'sec.about.k': 'about',
+      'sec.about.t': 'Education and stack',
+      'sec.certs.k': 'certifications',
+      'sec.certs.t': 'Certifications',
+      'sec.contact.k': 'contact',
+      'sec.contact.t': "Let's talk",
+      'sec.contact.s': 'Have a role, a project or a question? Send me a message and I will get back to you soon.',
+      'featured.results': 'Results',
+      'featured.nist': 'NIST SP 800-22 tests',
+      'featured.pass': 'passed',
+      'featured.fail': 'failed',
+      'featured.aval': 'Avalanche effect',
+      'featured.aval.pw': 'Password',
+      'featured.aval.salt': 'Salt',
+      'featured.aval.avg': 'Average',
+      'featured.aval.note': 'Bits that flip when 1 character or 1 bit changes. The line marks the ideal 50%.',
+      'featured.paper': 'Read the paper',
+      'featured.how': 'How we built it',
+      'card.details': 'See details',
+      'card.code': 'Code',
+      'card.demo': 'Live dashboard',
+      'arch.title': 'Model architecture',
+      'arch.pw': 'Password',
+      'arch.salt': 'Salt · 128 bits',
+      'arch.concat': 'Concatenation',
+      'arch.out': 'Key · 128 bits',
+      'exp.letter': 'Recommendation letter',
+      'edu.gpa': 'GPA',
+      'cert.verify': 'Verify',
+      'form.name': 'name',
+      'form.name.ph': 'Your name',
+      'form.email': 'email',
+      'form.email.ph': 'you@email.com',
+      'form.msg': 'message',
+      'form.msg.ph': 'Tell me about the role or the project…',
+      'form.send': 'Send message',
+      'form.sending': 'Sending…',
+      'form.ok': 'Done, I got your message. I will reply soon.',
+      'form.err': "Couldn't send it. Email me directly at saidsigala14@gmail.com.",
+      'contact.find': 'Find me on',
+      'contact.avail.t': 'Availability',
+      'contact.avail': "I'm looking for full-time <strong>Data Engineer</strong> or <strong>Analytics Engineer</strong> roles, remote or hybrid.",
+      'footer.built': 'Designed and built by',
+      'footer.top': 'back to top ↑',
+      'meta.title': 'Said Sigala · Data Engineer',
+      'meta.desc': 'Said Sigala Morales, data engineer. ETL/ELT pipelines with Airflow, dbt and Google Cloud.'
+    }
+  };
 
-function svgIcon(path, size = 20) {
-  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
-}
+  const FILES = ['config', 'projects', 'experience', 'testimonial', 'education', 'skills', 'certifications'];
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 
-function animateStatNum(el, raw) {
-  const m = raw.match(/^([<~]?)(\d+(?:\.\d+)?)(.*)$/);
-  if (!m) return;
-  const [, pre, numStr, suf] = m;
-  const target = parseFloat(numStr);
-  const dec = numStr.includes('.') ? numStr.split('.')[1].length : 0;
-  let t0 = null;
-  function step(ts) {
-    if (!t0) t0 = ts;
-    const p = Math.min((ts - t0) / 1400, 1);
-    const ease = 1 - Math.pow(1 - p, 3);
-    el.textContent = pre + (dec ? (target * ease).toFixed(dec) : Math.floor(target * ease)) + suf;
-    if (p < 1) requestAnimationFrame(step);
-    else el.textContent = raw;
+  let DATA = null;
+  let lang = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'es';
+  let lastFocus = null;
+
+  const t = (k) => (I18N[lang] && I18N[lang][k]) || I18N.es[k] || k;
+  const tr = (v) => (v && typeof v === 'object' && !Array.isArray(v)) ? (v[lang] ?? v.es ?? '') : (v ?? '');
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+  /* ---------- Iconos ---------- */
+  const ICON = {
+    mail: '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>',
+    linkedin: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.5h4V21H3zM9.5 9.5h3.8v1.6h.06c.53-1 1.83-2.06 3.76-2.06 4.02 0 4.76 2.65 4.76 6.09V21h-4v-5.1c0-1.22-.02-2.78-1.7-2.78-1.7 0-1.96 1.33-1.96 2.7V21h-4z"/></svg>',
+    github: '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.84 1.19 3.1 0 4.43-2.7 5.4-5.27 5.69.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5z"/></svg>',
+    ext: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6M20 4l-9 9M19 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1h5"/></svg>',
+    doc: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></svg>',
+    star: '<svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>',
+    arrow: '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+  };
+
+  /* ---------- Piezas reutilizables ---------- */
+  const pipe = (nodes) => `<div class="pipe" aria-hidden="true">${
+    nodes.map((n, i) => i
+      ? `<span class="pipe-seg"><span class="pipe-link"></span><span class="pipe-node">${esc(tr(n))}</span></span>`
+      : `<span class="pipe-node">${esc(tr(n))}</span>`).join('')
+  }</div>`;
+  const tags = (list) => `<div class="tags">${list.map((x) => `<span class="tag">${esc(tr(x))}</span>`).join('')}</div>`;
+  const extLink = (href, label, cls = 'btn btn-ghost btn-sm', icon = ICON.ext) =>
+    `<a class="${cls}" href="${esc(href)}" target="_blank" rel="noopener">${label} ${icon}</a>`;
+
+  /* ---------- Render: hero ---------- */
+  function renderHero(cfg) {
+    $('#heroName').textContent = cfg.name;
+    $('#heroRole').textContent = tr(cfg.role);
+    $('#heroTagline').textContent = tr(cfg.tagline);
+    $('#cvLink').href = cfg.cv;
+
+    $('#heroSocials').innerHTML = `
+      <a href="mailto:${esc(cfg.email)}" aria-label="Email">${ICON.mail}</a>
+      <a href="${esc(cfg.linkedin)}" target="_blank" rel="noopener" aria-label="LinkedIn">${ICON.linkedin}</a>
+      <a href="${esc(cfg.github)}" target="_blank" rel="noopener" aria-label="GitHub">${ICON.github}</a>`;
+
+    const photo = $('#heroPhoto');
+    if (!photo.getAttribute('src')) photo.src = cfg.photo;
+    $('#termName').textContent = cfg.shortName;
+    $('#termRole').textContent = lang === 'en' ? 'data_engineer' : 'ingeniero_de_datos';
+
+    const stack = cfg.stack.map((s) => s.toLowerCase()).join(', ');
+    const L = lang === 'en'
+      ? { c: '# profile', focus: 'pipelines · modeling · cloud', status: 'open to work', loc: tr(cfg.location) }
+      : { c: '# perfil', focus: 'pipelines · modelado · nube', status: 'disponible', loc: tr(cfg.location) };
+    $('#termBody').innerHTML =
+`<span class="c">${L.c}</span>
+<span class="k">name</span>: <span class="s">${esc(cfg.name)}</span>
+<span class="k">role</span>: <span class="s">${esc(tr(cfg.role))}</span>
+<span class="k">stack</span>: [<span class="s">${esc(stack)}</span>]
+<span class="k">focus</span>: <span class="s">${L.focus}</span>
+<span class="k">location</span>: <span class="s">${esc(L.loc)}</span>
+<span class="k">status</span>: <span class="ok">● ${L.status}</span>`;
+
+    $('#stats').innerHTML = cfg.stats.map((s) => `
+      <div class="stat reveal">
+        <div class="stat-value">${esc(s.value)}</div>
+        <div class="stat-label">${esc(tr(s.label))}</div>
+      </div>`).join('');
   }
-  requestAnimationFrame(step);
-}
 
-const ICONS = {
-  user:    '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
-  github:  '<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>',
-  linkedin:'<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>',
-  mail:    '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
-  chart:   '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
-  image:   '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
-  link:    '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
-};
+  /* ---------- Render: proyecto estrella ---------- */
+  function renderFeatured(p) {
+    const passed = p.nist.filter((n) => n[2]).length;
+    const av = p.avalanche;
+    const avRow = (label, v) => `
+      <div class="aval-row">
+        <span>${label}</span>
+        <div class="aval-track"><div class="aval-fill" data-w="${v}"></div><span class="aval-ideal" title="50 %"></span></div>
+        <b>${v.toFixed(2)}%</b>
+      </div>`;
+    const metrics = p.metrics.filter((m) => m.value !== '13/15').slice(0, 3);
 
-/* ─── FETCH ALL DATA ─── */
-async function fetchAll() {
-  const paths = ['config', 'about', 'skills', 'projects', 'experience', 'certifications', 'education'];
-  const results = await Promise.all(
-    paths.map(p => fetch(`/data/${p}.json`).then(r => r.json()))
-  );
-  return Object.fromEntries(paths.map((p, i) => [p, results[i]]));
-}
+    $('#featuredCard').innerHTML = `
+      <article class="featured reveal">
+        <div class="featured-main">
+          <div class="featured-top">
+            <span class="kicker">${esc(tr(p.kicker))}</span>
+            <span class="badge-star">${ICON.star} ${esc(tr(p.badge))}</span>
+          </div>
+          <h3 class="featured-title">${esc(p.title)}</h3>
+          <p class="featured-subtitle">${esc(tr(p.subtitle))}</p>
+          <p class="featured-summary">${esc(tr(p.summary))}</p>
+          ${pipe(p.pipeline)}
+          ${tags(p.tags)}
+          <div class="featured-actions">
+            <a class="btn btn-primary" href="${esc(p.links.paper)}" target="_blank" rel="noopener">${ICON.doc} ${t('featured.paper')}</a>
+            <button type="button" class="btn btn-ghost" data-open="${p.id}">${t('featured.how')} ${ICON.arrow}</button>
+            ${extLink(p.links.github, 'GitHub', 'btn btn-ghost', ICON.github)}
+          </div>
+        </div>
+        <div class="featured-side">
+          <div>
+            <div class="panel-head">
+              <span class="panel-title">${t('featured.nist')}</span>
+              <span class="panel-value accent">${passed}/${p.nist.length}</span>
+            </div>
+            <div class="nist-grid">
+              ${p.nist.map(([name, pv, ok]) => `<span class="nist-cell${ok ? '' : ' fail'}" title="${esc(name)} · p = ${esc(pv)} · ${ok ? t('featured.pass') : t('featured.fail')}"></span>`).join('')}
+            </div>
+            <div class="nist-legend"><span>${passed} ${t('featured.pass')}${lang === 'es' && passed !== 1 ? 's' : ''}</span><span class="f">DFT, Non-Overlapping Template</span></div>
+          </div>
+          <div>
+            <div class="panel-head">
+              <span class="panel-title">${t('featured.aval')}</span>
+              <span class="panel-value" style="color:var(--amber)">${av.overall.toFixed(2)}% <span style="color:var(--faint);font-weight:400">/ ${av.ideal}%</span></span>
+            </div>
+            <div class="aval">
+              ${avRow(t('featured.aval.pw'), av.password)}
+              ${avRow(t('featured.aval.salt'), av.salt)}
+              ${avRow(t('featured.aval.avg'), av.overall)}
+              <p class="aval-note">${t('featured.aval.note')}</p>
+            </div>
+          </div>
+          <div class="metric-row">
+            ${metrics.map((m) => `<div class="metric"><div class="metric-v">${esc(m.value)}</div><div class="metric-l">${esc(tr(m.label))}</div></div>`).join('')}
+          </div>
+        </div>
+      </article>`;
+  }
 
-/* ─── RENDER NAV / HERO ─── */
-function renderHero(cfg, about) {
-  // Logo
-  $('#navLogo').textContent = cfg.initials + '.';
-  document.title = `Portafolio — ${cfg.name}`;
+  /* ---------- Render: tarjetas de proyectos ---------- */
+  function renderProjects(list) {
+    $('#projectsGrid').innerHTML = list.map((p) => {
+      const img = p.images && p.images[0];
+      return `
+      <article class="card reveal">
+        <div class="card-visual${img ? ' has-img' : ''}">
+          ${img ? `<img src="${esc(img)}" alt="${esc(p.title)}" loading="lazy"/>` : ''}
+          ${pipe(p.pipeline)}
+        </div>
+        <div class="card-body">
+          <p class="card-sub">${esc(tr(p.subtitle))}</p>
+          <h3 class="card-title">${esc(p.title)}</h3>
+          <p class="card-summary">${esc(tr(p.summary))}</p>
+          ${tags(p.tags)}
+          <div class="card-actions">
+            <button type="button" class="btn btn-primary btn-sm" data-open="${p.id}">${t('card.details')} ${ICON.arrow}</button>
+            ${p.links.github ? extLink(p.links.github, t('card.code'), 'btn btn-ghost btn-sm', ICON.github) : ''}
+            ${p.links.demo ? extLink(p.links.demo, t('card.demo')) : ''}
+          </div>
+        </div>
+      </article>`;
+    }).join('');
+  }
 
-  // Available badge
-  const badge = $('#heroAvailable');
-  if (!cfg.available) badge.style.display = 'none';
+  /* ---------- Render: experiencia ---------- */
+  function renderExperience(jobs, testi) {
+    $('#timeline').innerHTML = jobs.map((j) => `
+      <li class="job reveal">
+        <p class="job-date">${esc(tr(j.start))} — ${esc(tr(j.end))}</p>
+        <h3 class="job-role">${esc(tr(j.role))}</h3>
+        <p class="job-org">${esc(j.company)} <span>· ${esc(tr(j.type))}</span></p>
+        <ul>${j.bullets.map((b) => `<li>${esc(tr(b))}</li>`).join('')}</ul>
+        ${tags(j.tags)}
+        ${j.letterUrl ? extLink(j.letterUrl, t('exp.letter'), 'btn btn-ghost btn-sm', ICON.doc) : ''}
+      </li>`).join('');
 
-  // Name + title
-  const nameParts = cfg.name.split(' ');
-  const first = nameParts.slice(0, -1).join(' ');
-  const last  = nameParts[nameParts.length - 1];
-  $('#heroName').innerHTML = `${first} <em>${last}</em>`;
-  $('#heroTitle').textContent = cfg.title;
-  $('#heroBio').textContent = cfg.shortBio;
+    const note = tr(testi.note);
+    $('#testimonial').innerHTML = `
+      <div class="q" aria-hidden="true">“</div>
+      <blockquote>${esc(tr(testi.quote))}</blockquote>
+      ${note ? `<p class="note">${esc(note)}</p>` : ''}
+      <figcaption>
+        <span class="avatar">${esc(testi.initials)}</span>
+        <span><span class="t-name">${esc(testi.author)}</span><br/><span class="t-role">${esc(tr(testi.role))}</span></span>
+      </figcaption>`;
+  }
 
-  // CTA links
-  const cvLink = $('#heroCvLink');
-  cvLink.href = cfg.cv;
-  cvLink.setAttribute('download', '');
-  $('#heroProjectsLink').href = '#projects';
+  /* ---------- Render: sobre mí, educación y stack ---------- */
+  function renderAbout(cfg, edu, skills) {
+    $('#aboutBio').textContent = tr(cfg.bio);
+    $('#education').innerHTML = edu.map((e) => `
+      <div class="edu">
+        <div class="edu-top">
+          <span class="edu-degree">${esc(tr(e.degree))}</span>
+          <span class="edu-years">${esc(e.years)}</span>
+        </div>
+        <p class="edu-inst">${esc(e.institution)}</p>
+        <div class="edu-meta"><span class="pill">${t('edu.gpa')} ${esc(e.gpa)}</span><span class="pill muted">${esc(tr(e.status))}</span></div>
+        <ul>${e.highlights.map((h) => `<li>${esc(tr(h))}</li>`).join('')}</ul>
+      </div>`).join('');
 
-  // Socials
-  $('#heroSocials').innerHTML = [
-    { href: `mailto:${cfg.email}`,  icon: ICONS.mail,     label: 'Email' },
-    { href: cfg.linkedin,           icon: ICONS.linkedin,  label: 'LinkedIn' },
-    { href: cfg.github,             icon: ICONS.github,    label: 'GitHub' },
-  ].map(s => `
-    <a href="${s.href}" class="social-link" title="${s.label}" target="_blank" rel="noopener">
-      ${svgIcon(s.icon, 16)}
-    </a>
-  `).join('');
+    $('#skills').innerHTML = skills.map((g) => `
+      <div class="skill-group reveal">
+        <h3>${esc(tr(g.category))}</h3>
+        ${tags(g.items)}
+      </div>`).join('');
+  }
 
-  // Photo with floating badges
-  const photoEl = $('#heroPhoto');
-  if (cfg.photo) {
-    photoEl.innerHTML = `
-      <div class="hero-photo-inner">
-        <img src="${cfg.photo}" alt="${cfg.name}" loading="lazy"/>
-      </div>
-      <div class="hero-float-badge badge-1">Python · SQL</div>
-      <div class="hero-float-badge badge-2">Apache Airflow</div>
-      <div class="hero-float-badge badge-3">dbt · BigQuery</div>
-    `;
-  } else {
-    photoEl.innerHTML = `
-      <div class="hero-photo-inner">
-        <div class="hero-photo-placeholder">
-          ${svgIcon(ICONS.user, 56)}
-          <p>Agrega tu foto</p>
+  /* ---------- Render: certificaciones ---------- */
+  function renderCerts(list) {
+    $('#certs').innerHTML = list.map((c) => `
+      <div class="cert reveal">
+        <span class="cert-abbr" style="background:color-mix(in srgb, ${esc(c.color)} 16%, transparent);color:color-mix(in srgb, ${esc(c.color)} 80%, var(--text))">${esc(c.abbr)}</span>
+        <div>
+          <p class="cert-name">${esc(c.name)}</p>
+          <p class="cert-issuer">${esc(c.issuer)}</p>
+          <div class="cert-foot">
+            <span>${esc(tr(c.date))}</span>
+            ${c.verifyUrl ? `<a href="${esc(c.verifyUrl)}" target="_blank" rel="noopener">${t('cert.verify')} ↗</a>` : ''}
+          </div>
+        </div>
+      </div>`).join('');
+  }
+
+  /* ---------- Render: contacto ---------- */
+  function renderContact(cfg) {
+    const gh = cfg.github.replace(/^https?:\/\//, '');
+    const li = cfg.linkedin.replace(/^https?:\/\/(www\.)?/, '');
+    $('#contactLinks').innerHTML = `
+      <a class="contact-link" href="mailto:${esc(cfg.email)}">${ICON.mail}<span>${esc(cfg.email)}</span></a>
+      <a class="contact-link" href="${esc(cfg.linkedin)}" target="_blank" rel="noopener">${ICON.linkedin}<span>${esc(li)}</span></a>
+      <a class="contact-link" href="${esc(cfg.github)}" target="_blank" rel="noopener">${ICON.github}<span>${esc(gh)}</span></a>`;
+    $('#contactLocation').textContent = '📍 ' + tr(cfg.location);
+  }
+
+  /* ---------- Modal de proyecto ---------- */
+  function archDiagram() {
+    return `
+      <div class="arch" aria-label="${t('arch.title')}">
+        <p class="arch-title">${t('arch.title')}</p>
+        <div class="arch-grid">
+          <div class="arch-lane l1">${pipe([t('arch.pw'), 'Embedding 128 + PE', 'BiLSTM 2×64'])}</div>
+          <div class="arch-lane l2">${pipe([t('arch.salt'), 'Dense 128→256→256→128'])}</div>
+          <div class="arch-merge">
+            <span class="arch-brace"></span>
+            ${pipe([t('arch.concat') + ' 256', 'MLP 256→256→128', t('arch.out')])}
+          </div>
         </div>
       </div>`;
   }
 
-  // Nav CTA link
-  $('#navCta').href = `mailto:${cfg.email}`;
+  function openModal(id) {
+    const p = DATA.projects.find((x) => x.id === id);
+    if (!p) return;
+    lastFocus = document.activeElement;
+    const links = [
+      p.links.paper ? `<a class="btn btn-primary" href="${esc(p.links.paper)}" target="_blank" rel="noopener">${ICON.doc} ${t('featured.paper')}</a>` : '',
+      p.links.github ? extLink(p.links.github, t('card.code'), p.links.paper ? 'btn btn-ghost' : 'btn btn-primary', ICON.github) : '',
+      p.links.demo ? extLink(p.links.demo, t('card.demo'), 'btn btn-ghost') : ''
+    ].join('');
 
-  // Footer
-  $('#footerName').textContent = cfg.name;
-  const year = new Date().getFullYear();
-  $('#footerYear').textContent = year;
-}
-
-/* ─── RENDER EDUCATION ─── */
-function renderEducation(cfg, education) {
-  $('#educationList').innerHTML = `<div class="education-grid">${education.map(e => `
-    <div class="education-card fade-up">
-      <div class="education-card-header">
-        <div>
-          <div class="education-degree">${e.degree}</div>
-          <div class="education-institution">${e.institution}</div>
-        </div>
-        <div class="education-date">${e.startDate} – ${e.endDate}</div>
+    $('#modalBody').innerHTML = `
+      ${p.kicker ? `<p class="modal-kicker">${esc(tr(p.kicker))}</p>` : ''}
+      <h2 class="modal-title" id="modalTitle">${esc(p.title)}</h2>
+      <p class="modal-sub">${esc(tr(p.subtitle))}</p>
+      ${pipe(p.pipeline)}
+      ${p.id === 'argon2net' ? archDiagram() : ''}
+      <div class="modal-sections">
+        ${p.details.map((d) => `<section><h3>${esc(tr(d.h))}</h3><p>${esc(tr(d.p))}</p></section>`).join('')}
       </div>
-      <div class="education-meta">
-        ${e.status ? `<span class="education-badge">${e.status}</span>` : ''}
-        ${e.gpa ? `<span class="education-gpa">Promedio ${e.gpa}</span>` : ''}
-      </div>
-      ${e.highlights.length ? `<ul class="timeline-bullets">${e.highlights.map(h => `<li>${h}</li>`).join('')}</ul>` : ''}
-    </div>
-  `).join('')}</div>`;
-}
+      ${p.images && p.images.length ? `<div class="modal-gallery">${p.images.map((src, i) => `<button type="button" data-zoom="${esc(src)}" aria-label="Captura ${i + 1}"><img src="${esc(src)}" alt="${esc(p.title)} · ${i + 1}" loading="lazy"/></button>`).join('')}</div>` : ''}
+      ${tags(p.tags)}
+      <div class="modal-links">${links}</div>`;
 
-/* ─── RENDER SKILLS ─── */
-const SKILL_ICONS = {
-  'Lenguajes y Consultas':          '<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>',
-  'Stack de Datos y Orquestación':  '<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>',
-  'Nube':                           '<path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/>',
-  'APIs e Integración':             '<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>',
-  'ML y Ciencia de Datos':          '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>',
-  'Infraestructura y Herramientas': '<rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>',
-};
-
-function renderSkills(skills) {
-  $('#skillsGrid').innerHTML = skills.map(group => `
-    <div class="skill-group">
-      <div class="skill-group-header">
-        <div class="skill-group-icon">${svgIcon(SKILL_ICONS[group.category] || ICONS.chart, 15)}</div>
-        <div class="skill-group-title">${group.category}</div>
-      </div>
-      <div class="skill-tags">
-        ${group.items.map(s => `<span class="skill-tag">${s}</span>`).join('')}
-      </div>
-    </div>
-  `).join('');
-}
-
-/* ─── RENDER PROJECTS ─── */
-let activeProjects = [];
-
-function screenshotEl(src, idx) {
-  if (src && !src.includes('placeholder')) {
-    return `<div class="modal-screenshot"><img src="${src}" alt="Captura ${idx + 1}" loading="lazy"/></div>`;
+    const m = $('#modal');
+    m.hidden = false;
+    m.dataset.id = id;
+    document.body.style.overflow = 'hidden';
+    $('.modal-panel', m).scrollTop = 0;
+    $('.modal-close', m).focus();
   }
-  return `
-    <div class="modal-screenshot">
-      <div class="modal-screenshot-ph">
-        ${svgIcon(ICONS.image, 36)}
-        <span>Agregar captura ${idx + 1}</span>
-      </div>
-    </div>`;
-}
 
-function renderProjects(projects) {
-  activeProjects = projects;
-  $('#projectsGrid').innerHTML = projects.map((p, i) => `
-    <article class="project-card fade-up delay-${(i % 3) + 1}" data-id="${p.id}" tabindex="0" role="button" aria-label="Ver detalles de ${p.title}" style="--card-accent:${p.thumbAccent}">
-      <div class="project-thumb" style="background:${p.thumbColor}">
-        ${p.screenshots[0] && !p.screenshots[0].includes('placeholder')
-          ? `<img src="${p.screenshots[0]}" alt="${p.title}" loading="lazy"/>`
-          : `<div class="project-thumb-placeholder" style="color:${p.thumbAccent}">
-               <div class="project-thumb-icon" style="background:${p.thumbAccent}1A;border:1.5px solid ${p.thumbAccent}35">
-                 ${svgIcon(ICONS.chart, 28)}
-               </div>
-               ${p.thumbMetric ? `<div class="project-thumb-metric">${p.thumbMetric}</div>` : ''}
-               <span class="project-thumb-name">${p.tags.slice(0, 3).join(' · ')}</span>
-             </div>`
-        }
-        <span class="project-thumb-dataset" style="${p.screenshots[0] ? 'color:#fff;text-shadow:0 1px 6px rgba(0,0,0,0.7)' : `color:${p.thumbAccent}`}">${p.dataset}</span>
-      </div>
-      <div class="project-body">
-        <div class="project-chips">${p.tags.map(t => `<span class="chip">${t}</span>`).join('')}</div>
-        <h3 class="project-title">${p.title}</h3>
-        <p class="project-desc">${p.shortDesc}</p>
-        <div class="project-links">
-          <a class="project-link" href="#" onclick="openModal(${p.id});return false">Ver detalles →</a>
-          ${p.github
-            ? `<a class="project-link ghost" href="${p.github}" target="_blank" rel="noopener">GitHub ↗</a>`
-            : p.articleUrl
-              ? `<a class="project-link ghost" href="${p.articleUrl}" target="_blank" rel="noopener">Leer artículo ↗</a>`
-              : ''}
-        </div>
-      </div>
-    </article>
-  `).join('');
+  function closeModal() {
+    const m = $('#modal');
+    if (m.hidden) return;
+    m.hidden = true;
+    delete m.dataset.id;
+    document.body.style.overflow = '';
+    if (lastFocus) lastFocus.focus();
+  }
 
-  // Card click opens modal
-  $$('.project-card').forEach(card => {
-    card.addEventListener('click', () => openModal(+card.dataset.id));
-    card.addEventListener('keydown', e => { if (e.key === 'Enter') openModal(+card.dataset.id); });
-  });
-}
+  function openLightbox(src) {
+    const lb = $('#lightbox');
+    $('#lightboxImg').src = src;
+    lb.hidden = false;
+    $('.modal-close', lb).focus();
+  }
+  function closeLightbox() { $('#lightbox').hidden = true; }
 
-/* ─── RENDER EXPERIENCE ─── */
-function renderExperience(jobs) {
-  $('#timeline').innerHTML = jobs.map(job => `
-    <div class="timeline-item fade-up">
-      <div class="timeline-dot"></div>
-      <div class="timeline-date">${job.startDate} – ${job.endDate}</div>
-      <div class="timeline-role">${job.role}</div>
-      <div class="timeline-company">
-        ${job.company}
-        <span>· ${job.type}</span>
-      </div>
-      <ul class="timeline-bullets">
-        ${job.bullets.map(b => `<li>${b}</li>`).join('')}
-      </ul>
-      <div class="timeline-tags">
-        ${job.tags.map(t => `<span class="timeline-tag">${t}</span>`).join('')}
-      </div>
-      ${job.letterUrl ? `<div style="margin-top:0.75rem"><a href="${job.letterUrl}" class="btn-ghost" target="_blank" rel="noopener" style="font-size:0.8125rem;padding:0.5rem 1.25rem">Carta de recomendación ↗</a></div>` : ''}
-    </div>
-  `).join('');
-}
+  /* ---------- Textos estáticos ---------- */
+  function applyStatic() {
+    document.documentElement.setAttribute('lang', lang);
+    $$('[data-i18n]').forEach((el) => { el.textContent = t(el.dataset.i18n); });
+    $$('[data-i18n-html]').forEach((el) => { el.innerHTML = t(el.dataset.i18nHtml); });
+    $$('[data-i18n-ph]').forEach((el) => { el.placeholder = t(el.dataset.i18nPh); });
+    $$('[data-i18n-aria]').forEach((el) => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
+    $$('.lang-switch button').forEach((b) => { const on = b.dataset.lang === lang; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+    document.title = t('meta.title');
+    const md = $('meta[name="description"]');
+    if (md) md.setAttribute('content', t('meta.desc'));
+  }
 
-/* ─── RENDER CERTIFICATIONS ─── */
-function renderCertifications(certs) {
-  $('#certsGrid').innerHTML = certs.map(c => `
-    <div class="cert-card fade-up" style="border-top: 3px solid ${c.color}">
-      <div class="cert-header">
-        <div class="cert-badge" style="background:${c.color}22; color:${c.color}">${c.abbr}</div>
-        <div>
-          <div class="cert-name">${c.name}</div>
-          <div class="cert-issuer">${c.issuer}</div>
-        </div>
-      </div>
-      <div class="cert-footer">
-        <div>
-          <div class="cert-id">${c.credentialId}</div>
-          <div class="cert-date">${c.date}</div>
-        </div>
-        ${c.verifyUrl && c.verifyUrl !== '#' ? `<a href="${c.verifyUrl}" class="cert-verify" target="_blank" rel="noopener">Verificar ↗</a>` : ''}
-      </div>
-    </div>
-  `).join('');
-}
+  function renderAll() {
+    const d = DATA;
+    applyStatic();
+    renderHero(d.config);
+    renderFeatured(d.projects.find((p) => p.featured));
+    renderProjects(d.projects.filter((p) => !p.featured));
+    renderExperience(d.experience, d.testimonial);
+    renderAbout(d.config, d.education, d.skills);
+    renderCerts(d.certifications);
+    renderContact(d.config);
+    observeReveal();
+    const m = $('#modal');
+    if (!m.hidden && m.dataset.id) openModal(m.dataset.id);
+  }
 
-/* ─── RENDER CONTACT ─── */
-function renderContact(cfg) {
-  $('#contactEmail').href   = `mailto:${cfg.email}`;
-  $('#contactEmailTxt').textContent = cfg.email;
-  $('#contactLinkedIn').href = cfg.linkedin;
-  $('#contactLinkedInTxt').textContent = cfg.linkedin.replace('https://', '');
-  $('#contactGithub').href  = cfg.github;
-  $('#contactGithubTxt').textContent = cfg.github.replace('https://', '');
-  $('#contactLocation').textContent = cfg.location;
+  function setLang(l) {
+    if (l === lang) return;
+    lang = l;
+    try { localStorage.setItem('lang', l); } catch (e) {}
+    renderAll();
+  }
 
-  $('#preferredStack').innerHTML = cfg.preferredStack.map(s => `<span class="chip">${s}</span>`).join('');
-}
+  /* ---------- Animación al hacer scroll ---------- */
+  let revealObs = null;
+  function observeReveal() {
+    const els = $$('.reveal:not(.in)');
+    if (!('IntersectionObserver' in window)) { els.forEach((e) => e.classList.add('in')); fillBars(); return; }
+    if (!revealObs) {
+      revealObs = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (!en.isIntersecting) return;
+          en.target.classList.add('in');
+          revealObs.unobserve(en.target);
+          if (en.target.classList.contains('featured')) fillBars();
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }
+    els.forEach((e) => revealObs.observe(e));
+    if ($('.featured.in')) fillBars();
+  }
+  function fillBars() {
+    // La barra ocupa 0–100 %; la marca del ideal está en 50 %.
+    requestAnimationFrame(() => $$('.aval-fill').forEach((b) => { b.style.width = b.dataset.w + '%'; }));
+  }
 
-/* ─── RENDER STATS ─── */
-function renderStats() {
-  const stats = [
-    { num: '2M+',    label: 'Registros procesados',      sub: 'Pipeline ETL Argon2Net' },
-    { num: '86.67%', label: 'Aprobación NIST SP 800-22', sub: '13 de 15 pruebas estadísticas' },
-    { num: '120+',   label: 'Casos de prueba',           sub: 'Cobertura 100% · América Móvil' },
-    { num: '9',      label: 'Certificaciones',           sub: 'Google Cloud · Stanford · HackerRank' },
-    { num: '<1 min', label: 'Latencia de datos',         sub: 'Weather Pipeline · tiempo real' },
-  ];
-  $('#statsGrid').innerHTML = stats.map(s => `
-    <div class="stat-item">
-      <div class="stat-num" data-raw="${s.num}">${s.num}</div>
-      <div class="stat-label">${s.label}</div>
-      <div class="stat-sub">${s.sub}</div>
-    </div>
-  `).join('');
+  /* ---------- Navegación ---------- */
+  function initNav() {
+    const nav = $('#nav');
+    const bar = $('#scrollProgress');
+    const onScroll = () => {
+      const h = document.documentElement;
+      nav.classList.toggle('scrolled', h.scrollTop > 8);
+      const max = h.scrollHeight - h.clientHeight;
+      bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
 
-  const countObs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        animateStatNum(e.target, e.target.dataset.raw);
-        countObs.unobserve(e.target);
-      }
+    const links = $('#navLinks');
+    const btn = $('#menuBtn');
+    btn.addEventListener('click', () => {
+      const open = links.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open);
     });
-  }, { threshold: 0.6 });
-  $$('.stat-num').forEach(el => countObs.observe(el));
-}
+    links.addEventListener('click', (e) => {
+      if (e.target.closest('a')) { links.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+    });
 
-/* ─── RENDER MARQUEE ─── */
-function renderMarquee(skills) {
-  const items = skills.flatMap(g => g.items);
-  const doubled = [...items, ...items];
-  $('#techMarquee').innerHTML = `
-    <div class="marquee-track">
-      ${doubled.map(t => `<span class="marquee-item"><span class="marquee-dot"></span>${t}</span>`).join('')}
-    </div>`;
-}
+    if ('IntersectionObserver' in window) {
+      const map = new Map($$('.nav-links a').map((a) => [a.getAttribute('href').slice(1), a]));
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting && map.has(en.target.id)) {
+            map.forEach((a) => a.classList.remove('active'));
+            map.get(en.target.id).classList.add('active');
+          }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      $$('main section[id]').forEach((s) => obs.observe(s));
+    }
+  }
 
-/* ─── RENDER TESTIMONIAL ─── */
-function renderTestimonial() {
-  $('#testimonialBlock').innerHTML = `
-    <div class="testimonial-quote-icon">"</div>
-    <p class="testimonial-text">
-      "Said desempeñó las actividades que le fueron asignadas con responsabilidad y profesionalismo.
-      Mostró disposición para integrarse a la dinámica de trabajo del equipo."
-    </p>
-    <div class="testimonial-author">
-      <div class="testimonial-avatar">MS</div>
-      <div>
-        <div class="testimonial-name">Mauricio Solís Romero</div>
-        <div class="testimonial-role">Líder de QA · Portales Web Marca Claro · América Móvil Contenido</div>
-      </div>
-    </div>
-  `;
-}
+  function initTheme() {
+    $('#themeToggle').addEventListener('click', () => {
+      const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      const meta = $('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', next === 'light' ? '#F6F7F9' : '#0A0E13');
+      try { localStorage.setItem('theme', next); } catch (e) {}
+    });
+  }
 
-/* ─── PROJECT MODAL ─── */
-function openModal(id) {
-  const p = activeProjects.find(x => x.id === id);
-  if (!p) return;
-
-  const overlay = $('#modalOverlay');
-  const content = $('#modalContent');
-
-  content.innerHTML = `
-    <div class="modal-head">
-      <div>
-        <div class="project-chips" style="margin-bottom:0.5rem">
-          ${p.tags.map(t => `<span class="chip">${t}</span>`).join('')}
-        </div>
-        <h2 style="font-family:var(--serif);font-size:1.625rem;line-height:1.2;color:var(--text)">${p.title}</h2>
-      </div>
-      <button class="modal-close" id="modalCloseBtn" aria-label="Cerrar modal">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-screenshots">
-        ${p.screenshots.map((src, i) => screenshotEl(src, i)).join('')}
-      </div>
-
-      <div class="modal-section-lbl">Descripción del proyecto</div>
-      <p class="modal-long-desc">${p.longDesc}</p>
-
-      <div class="modal-section-lbl">Detalles del proyecto</div>
-      <div class="modal-meta-grid">
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">Dataset</div>
-          <div class="modal-meta-val">${p.dataset}</div>
-        </div>
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">Duración</div>
-          <div class="modal-meta-val">${p.duration}</div>
-        </div>
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">Mi rol</div>
-          <div class="modal-meta-val">${p.role}</div>
-        </div>
-        <div class="modal-meta-item">
-          <div class="modal-meta-label">Resultado</div>
-          <div class="modal-meta-val">${p.outcome}</div>
-        </div>
-      </div>
-
-      <div class="modal-actions">
-        ${p.demo ? `<a href="${p.demo}" class="btn-primary" target="_blank" rel="noopener" style="font-size:0.875rem;padding:0.625rem 1.5rem">Demo en vivo →</a>` : ''}
-        ${p.github ? `<a href="${p.github}" class="btn-ghost" target="_blank" rel="noopener" style="font-size:0.875rem;padding:0.625rem 1.5rem">Ver en GitHub</a>` : ''}
-        ${p.articleUrl ? `<a href="${p.articleUrl}" class="btn-ghost" target="_blank" rel="noopener" style="font-size:0.875rem;padding:0.625rem 1.5rem">Leer artículo ↗</a>` : ''}
-      </div>
-    </div>
-  `;
-
-  overlay.classList.add('open');
-  document.body.style.overflow = 'hidden';
-  $('#modalCloseBtn').addEventListener('click', closeModal);
-}
-
-function closeModal() {
-  $('#modalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ─── CONTACT FORM ─── */
-function initContactForm() {
-  const form    = $('#contactForm');
-  const btn     = $('#submitBtn');
-  const success = $('#formSuccess');
-  if (!form) return;
-
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    btn.disabled = true;
-    btn.textContent = 'Enviando…';
-
-    try {
-      const body = new URLSearchParams({
-        'form-name': 'contact',
-        name:    form.elements['name'].value,
-        email:   form.elements['email'].value,
-        message: form.elements['message'].value,
-      }).toString();
-
-      const res = await fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body,
-      });
-      if (res.ok) {
-        btn.style.display = 'none';
-        success.style.display = 'block';
+  /* ---------- Formulario (Netlify Forms) ---------- */
+  function initForm() {
+    const form = $('#contactForm');
+    const btn = $('#submitBtn');
+    const status = $('#formStatus');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      btn.disabled = true;
+      btn.textContent = t('form.sending');
+      status.className = 'form-status';
+      status.textContent = '';
+      try {
+        const body = new URLSearchParams(new FormData(form)).toString();
+        const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         form.reset();
-      } else {
-        throw new Error(`HTTP ${res.status}`);
+        status.className = 'form-status ok';
+        status.textContent = t('form.ok');
+      } catch (err) {
+        status.className = 'form-status err';
+        status.textContent = t('form.err');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = t('form.send');
       }
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = 'Enviar mensaje →';
-      console.error('Form submission error:', err);
-      alert('Error al enviar. Intenta de nuevo o escríbeme directo a saidsigala14@gmail.com');
-    }
-  });
-}
-
-/* ─── TYPED HERO ANIMATION ─── */
-function initTyped() {
-  const el = $('#heroTyped');
-  if (!el) return;
-  const phrases = [
-    'Pipeline ETL/ELT de extremo a extremo',
-    'Orquestación con Apache Airflow',
-    'Analytics Engineering con dbt',
-    'Google Cloud · BigQuery',
-  ];
-  let phraseIdx = 0, charIdx = 0, deleting = false, pause = 0;
-  function tick() {
-    if (pause > 0) { pause--; setTimeout(tick, 80); return; }
-    const phrase = phrases[phraseIdx];
-    if (!deleting) {
-      el.textContent = phrase.slice(0, ++charIdx);
-      if (charIdx === phrase.length) { deleting = true; pause = 22; }
-      setTimeout(tick, 65);
-    } else {
-      el.textContent = phrase.slice(0, --charIdx);
-      if (charIdx === 0) {
-        deleting = false;
-        phraseIdx = (phraseIdx + 1) % phrases.length;
-        pause = 6;
-      }
-      setTimeout(tick, 38);
-    }
+    });
   }
-  setTimeout(tick, 900);
-}
 
-/* ─── THEME TOGGLE ─── */
-const SUN  = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-const MOON = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
-
-function initTheme() {
-  const btn = $('#themeToggle');
-  const update = () => {
-    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-    btn.innerHTML = svgIcon(dark ? SUN : MOON, 17);
-  };
-  update();
-  btn.addEventListener('click', () => {
-    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    update();
-  });
-}
-
-/* ─── SCROLL PROGRESS + BACK TO TOP ─── */
-function initScrollExtras() {
-  const progress = $('#scrollProgress');
-  const backTop  = $('#backTop');
-
-  window.addEventListener('scroll', () => {
-    const pct = window.scrollY / (document.body.scrollHeight - window.innerHeight) * 100;
-    progress.style.setProperty('--progress', `${pct.toFixed(1)}%`);
-    backTop.classList.toggle('visible', window.scrollY > 400);
-  }, { passive: true });
-
-  backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-}
-
-/* ─── SCROLL ANIMATIONS ─── */
-function initScrollAnimations() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
+  /* ---------- Eventos globales ---------- */
+  function initEvents() {
+    document.addEventListener('click', (e) => {
+      const open = e.target.closest('[data-open]');
+      if (open) { openModal(open.dataset.open); return; }
+      if (e.target.closest('[data-close]')) { closeModal(); return; }
+      const zoom = e.target.closest('[data-zoom]');
+      if (zoom) { openLightbox(zoom.dataset.zoom); return; }
+      if (e.target.closest('[data-lb-close]') || e.target.id === 'lightbox') { closeLightbox(); return; }
+      const lb = e.target.closest('.lang-switch button');
+      if (lb) setLang(lb.dataset.lang);
     });
-  }, { threshold: 0.08 });
-
-  $$('.fade-up').forEach(el => observer.observe(el));
-}
-
-/* ─── ACTIVE NAV ─── */
-function initActiveNav() {
-  const sections = $$('section[id]');
-  const links    = $$('.nav-links a');
-  const nav      = $('nav');
-
-  const onScroll = () => {
-    // scrolled class for shadow
-    nav.classList.toggle('scrolled', window.scrollY > 20);
-
-    // active section
-    let current = '';
-    sections.forEach(s => {
-      if (window.scrollY >= s.offsetTop - 120) current = s.id;
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Escape') return;
+      if (!$('#lightbox').hidden) closeLightbox();
+      else closeModal();
     });
-    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === `#${current}`));
-  };
+  }
 
-  window.addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
-}
-
-/* ─── MOBILE NAV ─── */
-function initMobileNav() {
-  const btn   = $('#mobileNavBtn');
-  const links = $('#navLinks');
-  if (!btn) return;
-
-  btn.addEventListener('click', () => {
-    const open = links.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open);
-  });
-
-  // Close on link click
-  $$('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => links.classList.remove('open'));
-  });
-}
-
-/* ─── MODAL EVENTS ─── */
-function initModal() {
-  const overlay = $('#modalOverlay');
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-}
-
-/* ─── INIT ─── */
-(async function init() {
-  try {
-    const data = await fetchAll();
-    const { config, about, skills, projects, experience, certifications, education } = data;
-
-    renderHero(config, about);
-    renderStats();
-    renderEducation(config, education);
-    renderSkills(skills);
-    renderMarquee(skills);
-    renderProjects(projects);
-    renderExperience(experience);
-    renderTestimonial();
-    renderCertifications(certifications);
-    renderContact(config);
-
-    initContactForm();
-    initModal();
-    initTyped();
-    initScrollAnimations();
-    initActiveNav();
-    initMobileNav();
+  /* ---------- Arranque ---------- */
+  async function init() {
+    applyStatic();
     initTheme();
-    initScrollExtras();
-
-    // Hide loader
-    const loader = $('#loader');
-    loader.classList.add('hidden');
-    setTimeout(() => loader.remove(), 600);
-
-  } catch (err) {
-    console.error('Portfolio failed to load data:', err);
-    $('#loader').innerHTML = '<p style="color:#c00;font-family:sans-serif">Error al cargar los datos del portafolio. Revisa la consola para más detalles.</p>';
+    initNav();
+    initEvents();
+    initForm();
+    try {
+      const res = await Promise.all(FILES.map((f) => fetch(`/data/${f}.json`, { cache: 'no-cache' }).then((r) => { if (!r.ok) throw new Error(f); return r.json(); })));
+      DATA = Object.fromEntries(FILES.map((f, i) => [f, res[i]]));
+      renderAll();
+    } catch (err) {
+      console.error('No se pudieron cargar los datos del portafolio:', err);
+    }
   }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
