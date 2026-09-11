@@ -1,26 +1,77 @@
 [
   {
-    "category": "Lenguajes y Consultas",
-    "items": ["Python", "SQL", "Bash"]
+    "category": {
+      "es": "Lenguajes",
+      "en": "Languages"
+    },
+    "items": [
+      "Python",
+      "SQL",
+      "Bash"
+    ]
   },
   {
-    "category": "Stack de Datos y Orquestación",
-    "items": ["Apache Airflow", "dbt", "PostgreSQL", "Apache Superset", "Pandas", "NumPy", "SciPy"]
+    "category": {
+      "es": "Orquestación y transformación",
+      "en": "Orchestration & transformation"
+    },
+    "items": [
+      "Apache Airflow",
+      "Prefect",
+      "dbt",
+      "pandas",
+      "NumPy"
+    ]
   },
   {
-    "category": "Nube",
-    "items": ["GCP BigQuery", "GCP Dataflow", "GCP Cloud Storage", "Azure"]
+    "category": {
+      "es": "Almacenamiento y nube",
+      "en": "Storage & cloud"
+    },
+    "items": [
+      "BigQuery",
+      "Cloud Storage",
+      "Dataflow",
+      "PostgreSQL",
+      "DuckDB",
+      "SQLite",
+      "Azure"
+    ]
   },
   {
-    "category": "APIs e Integración",
-    "items": ["REST APIs", "requests", "Validación JSON", "psycopg2"]
+    "category": {
+      "es": "Visualización",
+      "en": "Visualization"
+    },
+    "items": [
+      "Looker Studio",
+      "Apache Superset",
+      "Streamlit",
+      "Plotly",
+      "Matplotlib"
+    ]
   },
   {
-    "category": "ML y Ciencia de Datos",
-    "items": ["Scikit-learn", "Matplotlib", "BiLSTM / Deep Learning"]
+    "category": {
+      "es": "Machine learning",
+      "en": "Machine learning"
+    },
+    "items": [
+      "PyTorch",
+      "XGBoost",
+      "scikit-learn"
+    ]
   },
   {
-    "category": "Infraestructura y Herramientas",
-    "items": ["Docker", "Git", "Linux / WSL (Ubuntu)", "Jupyter"]
+    "category": {
+      "es": "Infraestructura",
+      "en": "Infrastructure"
+    },
+    "items": [
+      "Docker",
+      "Docker Compose",
+      "Git",
+      "Linux / WSL"
+    ]
   }
 ]

@@ -1,16 +1,28 @@
 {
   "name": "Said Sigala Morales",
-  "initials": "SS",
-  "title": "Ingeniero en sistemas computacionales | ETL/ELT · Airflow · dbt · GCP",
-  "tagline": "Disponible para nuevas oportunidades",
-  "shortBio": "Construyo pipelines de datos de extremo a extremo — desde la ingesta hasta flujos orquestados y despliegues en la nube. Enfocado en arquitectura limpia, resultados medibles y sistemas en los que los equipos pueden confiar.",
+  "shortName": "Said Sigala",
+  "handle": "said.sigala",
+  "role": { "es": "Ingeniero de Datos", "en": "Data Engineer" },
+  "tagline": {
+    "es": "Construyo pipelines de datos de principio a fin: ingesta, orquestación, modelado y nube.",
+    "en": "I build data pipelines end to end: ingestion, orchestration, modeling and cloud."
+  },
+  "bio": {
+    "es": "Soy egresado de Ingeniería en Sistemas Computacionales de la ESCOM-IPN. Me gusta tomar datos desordenados y convertirlos en algo en lo que se pueda confiar: pipelines con Airflow y Prefect, modelos en dbt y SQL, y despliegues en Google Cloud. Mi Trabajo Terminal, Argon2Net, me enseñó a medir con rigor lo que un modelo sí puede y no puede hacer.",
+    "en": "I graduated in Computer Systems Engineering from ESCOM-IPN in Mexico City. I like taking messy data and turning it into something people can trust: pipelines with Airflow and Prefect, models in dbt and SQL, and deployments on Google Cloud. My undergraduate thesis, Argon2Net, taught me to measure rigorously what a model can and can't do."
+  },
   "email": "saidsigala14@gmail.com",
-  "linkedin": "https://linkedin.com/in/saidsigala",
+  "linkedin": "https://www.linkedin.com/in/saidsigala",
   "github": "https://github.com/SaidHoffman",
   "cv": "/assets/material/Sigala_MoralesCurriculumV.pdf",
-  "location": "Gustavo A. Madero, Ciudad de México 🇲🇽",
-  "available": true,
-  "preferredStack": ["Python", "SQL", "Apache Airflow", "dbt", "BigQuery", "Docker"],
   "photo": "/assets/images/foto1.jpg",
-  "photoAbout": "/assets/images/foto2.jpg"
+  "location": { "es": "Ciudad de México", "en": "Mexico City" },
+  "available": true,
+  "stack": ["Python", "SQL", "Airflow", "dbt", "BigQuery", "Docker"],
+  "stats": [
+    { "value": "2M+", "label": { "es": "registros en el dataset de Argon2Net", "en": "records in the Argon2Net dataset" } },
+    { "value": "13/15", "label": { "es": "pruebas NIST SP 800-22 aprobadas", "en": "NIST SP 800-22 tests passed" } },
+    { "value": "5", "label": { "es": "proyectos de datos publicados", "en": "published data projects" } },
+    { "value": "9", "label": { "es": "certificaciones (Google Cloud, HackerRank)", "en": "certifications (Google Cloud, HackerRank)" } }
+  ]
 }

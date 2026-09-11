@@ -1,28 +1,25 @@
 [
   {
-    "institution": "Escuela Superior de Cómputo (ESCOM) – IPN",
-    "degree": "Ingeniería en Sistemas Computacionales",
-    "startDate": "Ago 2021",
-    "endDate": "Jun 2026 (Esperado)",
+    "institution": "Escuela Superior de Cómputo (ESCOM) · IPN",
+    "degree": { "es": "Ingeniería en Sistemas Computacionales", "en": "B.Eng. in Computer Systems Engineering" },
+    "years": "2021 – 2026",
     "gpa": "9.02 / 10",
-    "status": "Carta Pasante",
+    "status": { "es": "Carta de pasante", "en": "Graduate" },
     "highlights": [
-      "Trabajo Terminal «Argon2Net» — Propuesto a Mención Honorífica",
-      "Enfoque en ingeniería de datos, sistemas distribuidos y desarrollo de software",
-      "Participación en proyectos de investigación relacionados con aprendizaje automático y procesamiento de señales",
-      "Colaboración en proyectos de desarrollo de software con metodologías ágiles"
+      { "es": "Trabajo Terminal: Argon2Net, propuesto a mención honorífica.", "en": "Thesis: Argon2Net, nominated for honorable mention." },
+      { "es": "Enfoque en ingeniería de datos, sistemas distribuidos y desarrollo de software.", "en": "Focus on data engineering, distributed systems and software development." },
+      { "es": "Investigación en aprendizaje automático y procesamiento de señales.", "en": "Research in machine learning and signal processing." }
     ]
   },
   {
-    "institution": "CECyT 8 «Narciso Bassols» – IPN",
-    "degree": "Técnico en Computación",
-    "startDate": "2018",
-    "endDate": "2021",
+    "institution": "CECyT 8 «Narciso Bassols» · IPN",
+    "degree": { "es": "Técnico en Computación", "en": "Computer Technician (high school)" },
+    "years": "2018 – 2021",
     "gpa": "9.45 / 10",
-    "status": "Titulado",
+    "status": { "es": "Titulado", "en": "Graduated" },
     "highlights": [
-      "Participación en concursos interpolitécnicos de cálculo",
-      "Miembro club ajedrez como parte de mis actividades extracurriculares"
+      { "es": "Concursos interpolitécnicos de cálculo.", "en": "Inter-polytechnic calculus competitions." },
+      { "es": "Club de ajedrez.", "en": "Chess club." }
     ]
   }
 ]

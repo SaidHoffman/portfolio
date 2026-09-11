@@ -1,61 +1,256 @@
 [
   {
-    "id": 1,
-    "title": "Weather Data Pipeline",
-    "shortDesc": "Pipeline ELT de extremo a extremo que ingesta datos climáticos en tiempo real cada 5 minutos vía la API de Weatherstack, orquestado con Apache Airflow y visualizado en Apache Superset.",
-    "longDesc": "Construí un pipeline ELT completamente contenedorizado que obtiene datos climáticos en vivo de la API de Weatherstack cada 5 minutos, los carga en PostgreSQL y los transforma con dbt. La orquestación corre en Apache Airflow con un DAG que usa PythonOperator y DockerOperator, logrando una latencia de disponibilidad de datos menor a 1 minuto. Los modelos de staging en dbt eliminaron el 100% de los duplicados usando funciones de ventana SQL (ROW_NUMBER()), y los modelos de reporte con agregaciones diarias (promedios de temperatura y viento) redujeron el volumen de datos procesados en ~35%. Dashboards interactivos en Apache Superset muestran métricas en tiempo real con gráficos de dispersión y series de tiempo para análisis exploratorio. Todo el entorno está contenedorizado con Docker sobre WSL/Ubuntu y versionado con Git.",
-    "tags": ["Python", "Apache Airflow", "dbt", "PostgreSQL", "Apache Superset", "Docker", "REST API"],
-    "thumbColor": "#EAF5F1",
-    "thumbAccent": "#2D8C6E",
-    "screenshots": [],
-    "dataset": "API Weatherstack · ingesta en tiempo real cada 5 min",
-    "duration": "En curso",
-    "role": "Ingeniero de Datos (proyecto personal)",
-    "outcome": "<1 min de latencia · 35% reducción de volumen · 100% eliminación de duplicados",
-    "github": "https://github.com/SaidHoffman/weather-data-project",
-    "demo": "",
-    "articleUrl": "",
-    "thumbMetric": "<1 min latencia"
-  },
-  {
-    "id": 2,
-    "title": "Argon2Net — Biblioteca Python con Deep Learning",
-    "shortDesc": "Biblioteca Python con arquitectura BiLSTM que aprende a aproximar funciones de derivación de claves criptográficas. Aprobó 13/15 pruebas NIST SP 800-22 (86.67%) con 5 ms de inferencia promedio. Trabajo Terminal — Propuesto a Mención Honorífica.",
-    "longDesc": "Argon2Net es el Trabajo Terminal de mi carrera (Propuesto a Mención Honorífica), una biblioteca Python basada en una red neuronal BiLSTM que aprende a aproximar la función de derivación de claves Argon2id mediante aprendizaje supervisado.<br><br><strong>Pipeline ETL:</strong> Diseñé un pipeline modular en Python que procesó 2 millones de contraseñas del repositorio público SecLists, generando salts aleatorios de 128 bits vía CSPRNG y derivando claves objetivo con Argon2id (2 iteraciones, 64 MB de memoria, 4 hilos). Los registros se almacenaron en CSV estructurado optimizado para Pandas y NumPy.<br><br><strong>Arquitectura BiLSTM:</strong> Encoder de contraseña con embedding (dim 128) + positional encoding + BiLSTM bidireccional (2 capas, 64 unidades/dirección) → vector 128 dim. Encoder de salt con red feed-forward [128→256→256→128] + ReLU + Dropout 0.3 → vector 128 dim. Ambos vectores se concatenan y pasan por un MLP [256→256→128] con activación Sigmoid para generar la clave de 128 bits.<br><br><strong>Entrenamiento:</strong> Función de pérdida híbrida (BCE + balance de bits + distribución de transiciones), optimizador Adam (lr=0.001), batch 512, 25 épocas con early stopping. Mejor checkpoint en época 21. Hardware: NVIDIA GPU con CUDA, PyTorch 2.0.<br><br><strong>Resultados:</strong> 86.67% de aprobación NIST SP 800-22 (13/15 pruebas), 5 ms de inferencia promedio, 21 pruebas unitarias al 100%. Las fallas en DFT (Spectral) y Non-Overlapping Template evidencian un efecto avalancha débil (4.30% vs 50% ideal) — limitación reconocida y documentada: las redes neuronales pueden aproximar KDFs con precisión estadística razonable, pero aún no reemplazan funciones criptográficas diseñadas matemáticamente.",
-    "tags": ["Python", "PyTorch", "BiLSTM", "Deep Learning", "ETL", "NumPy", "Pandas", "NIST SP 800-22"],
-    "thumbColor": "#EEF4FF",
-    "thumbAccent": "#3B5FD4",
-    "screenshots": [],
-    "dataset": "2,000,000 contraseñas (SecLists) · salts CSPRNG 128 bits · claves Argon2id",
-    "duration": "Un semestre",
-    "role": "Ingeniero líder (Trabajo Terminal)",
-    "outcome": "86.67% aprobación NIST SP 800-22 (13/15) · 5 ms inferencia · 21 pruebas unitarias al 100% · Propuesto a Mención Honorífica",
-    "github": "",
-    "demo": "",
-    "articleUrl": "/assets/material/ArticuloTT_2025-B144%20(1).pdf",
-    "thumbMetric": "86.67% NIST SP 800-22"
-  },
-  {
-    "id": 3,
-    "title": "LigaMX Intelligence — Plataforma Analytics",
-    "shortDesc": "Pipeline end-to-end sobre 2,813 partidos de Liga MX (2016–2024): arquitectura medallion con dbt + DuckDB, rating ELO recalibrado partido a partido, XGBoost multiclase y simulador Monte Carlo de 5,000 iteraciones con dashboard Streamlit de 5 módulos.",
-    "longDesc": "Plataforma de inteligencia deportiva que modela 8 temporadas completas de la Liga MX combinando ingeniería de datos, modelado dimensional y machine learning en un pipeline orquestado con Prefect.<br><br><strong>Pipeline de datos:</strong> Ingesta automatizada desde Kaggle vía kagglehub hacia DuckDB como base de datos analítica. dbt transforma los datos en 3 capas — staging, intermediate y marts — con 6 modelos en total y tests automáticos de calidad (<code>not_null</code>, <code>unique</code>, <code>accepted_values</code>, <code>relationships</code>) en cada uno. Prefect orquesta los 8 pasos del pipeline con un tiempo de ejecución de 3–8 minutos.<br><br><strong>Rating ELO dinámico:</strong> Implementé el algoritmo ELO (K=32, +50 puntos de ventaja local) procesando los 2,813 partidos en orden cronológico. La clave del diseño: el ELO captura dinámica temporal que las estadísticas acumuladas ignoran — un equipo en racha positiva tiene un rating diferente al mismo equipo en baja forma, aunque sus totales de temporada sean idénticos. Este rating, junto con estadísticas rolling de los últimos 5 partidos (goles anotados, recibidos, puntos), forma las 9 features del modelo.<br><br><strong>Clasificador XGBoost multiclase:</strong> Entrenado sobre ~1,900 partidos (2016–2022) y validado en ~350 (temporada 2023). 300 estimadores con salida de 3 clases — victoria local, empate y victoria visitante. Las probabilidades por clase alimentan directamente el simulador Monte Carlo.<br><br><strong>Simulador Monte Carlo:</strong> Por cada escenario, el motor ejecuta 5,000 iteraciones: en cada una muestrea el resultado de cada partido pendiente según las probabilidades XGBoost, acumula puntos, resuelve desempates y registra el campeón. El output es una distribución de probabilidad de título por equipo — no una predicción puntual, sino la incertidumbre real de una temporada modelada estadísticamente.<br><br><strong>Dashboard Streamlit + Plotly:</strong> 5 módulos — KPIs históricos (2,813 partidos · 7,476 goles · 2.66 goles/partido · 23 equipos), clasificación con evolución jornada a jornada, perfiles de equipos con radar charts (4 dimensiones) e historial head-to-head, ranking ELO dinámico con series de tiempo por equipo, y Predictor con vista de partido individual y simulación de temporada completa.",
-    "tags": ["Python", "dbt", "DuckDB", "XGBoost", "Prefect", "Streamlit", "Plotly", "Monte Carlo"],
-    "thumbColor": "#FFF7ED",
-    "thumbAccent": "#C2410C",
-    "screenshots": [
-      "/assets/images/caputra1.png",
-      "/assets/images/captura2.png",
-      "/assets/images/captura3.png",
-      "/assets/images/captura4.png"
+    "id": "argon2net",
+    "featured": true,
+    "title": "Argon2Net",
+    "subtitle": {
+      "es": "Derivación de claves criptográficas con redes neuronales",
+      "en": "Cryptographic key derivation with neural networks"
+    },
+    "kicker": { "es": "Trabajo Terminal · ESCOM-IPN · 2025", "en": "Undergraduate thesis · ESCOM-IPN · 2025" },
+    "badge": { "es": "Propuesto a mención honorífica", "en": "Nominated for honorable mention" },
+    "summary": {
+      "es": "¿Puede una red neuronal imitar a Argon2id, la función que convierte contraseñas en claves? Armamos un dataset de 2 millones de registros y entrenamos una BiLSTM en PyTorch para reproducir sus claves. Pasó 13 de 15 pruebas de NIST, pero el efecto avalancha mostró por qué no puede sustituir a Argon2.",
+      "en": "Can a neural network imitate Argon2id, the function that turns passwords into keys? We built a 2-million-record dataset and trained a BiLSTM in PyTorch to reproduce its keys. It passed 13 of 15 NIST tests, but the avalanche effect showed why it can't replace Argon2."
+    },
+    "pipeline": ["SecLists", "Argon2id", "CSV · 2M", "BiLSTM", { "es": "Clave 128 bits", "en": "128-bit key" }],
+    "metrics": [
+      { "value": "13/15", "label": { "es": "pruebas NIST SP 800-22", "en": "NIST SP 800-22 tests" } },
+      { "value": "~5 ms", "label": { "es": "de inferencia por clave", "en": "inference per key" } },
+      { "value": "21/21", "label": { "es": "pruebas unitarias", "en": "unit tests" } },
+      { "value": "2M", "label": { "es": "registros de entrenamiento", "en": "training records" } }
     ],
-    "dataset": "Kaggle · 8 temporadas Liga MX · 2,813 partidos · 23 equipos (2016–2024)",
-    "duration": "Proyecto personal",
-    "role": "Ingeniero de Datos / ML (proyecto personal)",
-    "outcome": "2,813 partidos · 7,476 goles · 6 modelos dbt · ELO dinámico · XGBoost multiclase · 5,000 sims Monte Carlo",
-    "github": "https://github.com/SaidHoffman/LIGAMX",
-    "demo": "",
-    "articleUrl": "",
-    "thumbMetric": "2,813 partidos"
+    "nist": [
+      ["Frequency (Monobit)", "0.8543", true],
+      ["Block Frequency", "0.7234", true],
+      ["Cumulative Sums (Fwd)", "0.6891", true],
+      ["Cumulative Sums (Rev)", "0.7012", true],
+      ["Runs", "0.5432", true],
+      ["Longest Run of Ones", "0.4987", true],
+      ["Binary Matrix Rank", "0.4523", true],
+      ["DFT (Spectral)", "0.0083", false],
+      ["Non-Overlapping Template", "136/148", false],
+      ["Overlapping Template", "0.2987", true],
+      ["Maurer's Universal", "0.4123", true],
+      ["Linear Complexity", "0.3890", true],
+      ["Serial (m=16)", "0.5234", true],
+      ["Approximate Entropy", "0.4567", true],
+      ["Random Excursions", "0.0234", true]
+    ],
+    "avalanche": { "password": 2.25, "salt": 6.36, "overall": 4.30, "ideal": 50 },
+    "tags": ["Python", "PyTorch", "BiLSTM", "pandas", "NumPy", "NIST SP 800-22"],
+    "links": {
+      "github": "https://github.com/SaidHoffman/RedNeuronalTT",
+      "paper": "/assets/material/ArticuloTT_2025-B144%20(1).pdf"
+    },
+    "details": [
+      {
+        "h": { "es": "La pregunta", "en": "The question" },
+        "p": {
+          "es": "Funciones como Argon2id convierten una contraseña en una clave criptográfica y son lentas a propósito, para frenar ataques de fuerza bruta. Una red neuronal ya entrenada responde en milisegundos. Queríamos saber si una red puede aprender a imitar esa función y qué propiedades de seguridad se pierden en el camino.",
+          "en": "Functions like Argon2id turn a password into a cryptographic key, and they are slow on purpose to hold off brute-force attacks. A trained neural network answers in milliseconds. We wanted to know whether a network can learn to imitate that function, and which security properties get lost along the way."
+        }
+      },
+      {
+        "h": { "es": "Los datos", "en": "The data" },
+        "p": {
+          "es": "Armamos 2 millones de registros (contraseña, salt, clave): contraseñas reales de SecLists, salts de 128 bits generados con un CSPRNG y la clave que devuelve Argon2id con 2 iteraciones, 64 MB de memoria y 4 hilos. Todo quedó en CSV, listo para pandas y PyTorch. Este pipeline fue la base de todo: si los datos salían mal, nada de lo demás servía.",
+          "en": "We built 2 million (password, salt, key) records: real passwords from SecLists, 128-bit salts from a CSPRNG, and the key Argon2id returns with 2 iterations, 64 MB of memory and 4 threads. Everything went into CSV, ready for pandas and PyTorch. That pipeline was the foundation: if the data was wrong, nothing else mattered."
+        }
+      },
+      {
+        "h": { "es": "El modelo", "en": "The model" },
+        "p": {
+          "es": "Una BiLSTM de 2 capas lee la contraseña carácter por carácter, una red densa procesa el salt, y un MLP junta ambas salidas para generar los 128 bits. Entrenamos con Adam, batches de 512 y early stopping; el mejor punto llegó en la época 21.",
+          "en": "A 2-layer BiLSTM reads the password character by character, a dense network processes the salt, and an MLP combines both to produce the 128 bits. We trained with Adam, batches of 512 and early stopping; the best checkpoint came at epoch 21."
+        }
+      },
+      {
+        "h": { "es": "Lo que encontramos", "en": "What we found" },
+        "p": {
+          "es": "Las claves pasaron 13 de 15 pruebas de NIST SP 800-22: estadísticamente se parecen a las de un generador pseudoaleatorio decente. Pero al cambiar un solo carácter de la contraseña solo cambiaba el 4.30 % de los bits, cuando lo ideal es 50 %. La red aprendió cómo se ven las claves, no la difusión que hace segura a Argon2. Para mí esa es la parte más valiosa del proyecto: medir con rigor dónde está el límite.",
+          "en": "The keys passed 13 of 15 NIST SP 800-22 tests: statistically they look like the output of a decent pseudorandom generator. But changing a single password character only flipped 4.30% of the bits, where the ideal is 50%. The network learned what keys look like, not the diffusion that makes Argon2 secure. To me that's the most valuable part of the project: measuring rigorously where the limit is."
+        }
+      },
+      {
+        "h": { "es": "Qué seguiría", "en": "What's next" },
+        "p": {
+          "es": "Probar arquitecturas con más capacidad de difusión (Transformers o capas convolucionales) y una función de pérdida que castigue directamente la baja propagación de cambios.",
+          "en": "Try architectures with more diffusion capacity (Transformers or convolutional layers) and a loss function that directly penalizes weak change propagation."
+        }
+      }
+    ]
+  },
+  {
+    "id": "ligamx",
+    "title": "LigaMX Intelligence",
+    "subtitle": { "es": "Qué tan predecible es la Liga MX", "en": "How predictable is Liga MX?" },
+    "summary": {
+      "es": "Bajo 2,813 partidos (2016-2024) de Kaggle a DuckDB, los modelo con dbt, calculo un ELO por equipo y entreno un XGBoost que alimenta una simulación Monte Carlo de 5,000 torneos. Todo corre con Prefect y se ve en Streamlit.",
+      "en": "I pull 2,813 matches (2016-2024) from Kaggle into DuckDB, model them with dbt, compute an ELO rating per team and train an XGBoost model that feeds a 5,000-run Monte Carlo simulation. Prefect runs it all and Streamlit shows it."
+    },
+    "pipeline": ["Kaggle", "DuckDB", "dbt", "XGBoost", "Streamlit"],
+    "tags": ["Python", "dbt", "DuckDB", "Prefect", "XGBoost", "Streamlit", "Plotly"],
+    "images": ["/assets/images/caputra1.png", "/assets/images/captura2.png", "/assets/images/captura3.png", "/assets/images/captura4.png"],
+    "links": { "github": "https://github.com/SaidHoffman/LIGAMX" },
+    "details": [
+      {
+        "h": { "es": "Por qué", "en": "Why" },
+        "p": {
+          "es": "Quería saber qué tan predecible es la Liga MX y, de paso, armar un proyecto que tocara todo el ciclo: ingesta, modelado, machine learning y visualización.",
+          "en": "I wanted to know how predictable Liga MX is and, along the way, build a project that covered the whole cycle: ingestion, modeling, machine learning and visualization."
+        }
+      },
+      {
+        "h": { "es": "El pipeline", "en": "The pipeline" },
+        "p": {
+          "es": "Descargo el dataset de Kaggle, lo cargo a DuckDB y dbt lo transforma en tres capas (staging, intermediate y marts) con 9 tests de calidad. Prefect orquesta los pasos y reintenta la descarga si Kaggle falla.",
+          "en": "I download the dataset from Kaggle, load it into DuckDB, and dbt transforms it in three layers (staging, intermediate and marts) with 9 data quality tests. Prefect orchestrates the steps and retries the download if Kaggle fails."
+        }
+      },
+      {
+        "h": { "es": "El modelo", "en": "The model" },
+        "p": {
+          "es": "Las estadísticas acumuladas no dicen si un equipo viene en racha, así que calculé un rating ELO partido a partido (K = 32, +50 de ventaja local). Con el ELO y la forma de los últimos 5 partidos entreno un XGBoost que da probabilidades de victoria local, empate o visita.",
+          "en": "Season totals don't tell you whether a team is on a streak, so I compute an ELO rating match by match (K = 32, +50 home advantage). With ELO and form over the last 5 matches, I train an XGBoost model that outputs home win, draw and away win probabilities."
+        }
+      },
+      {
+        "h": { "es": "La simulación", "en": "The simulation" },
+        "p": {
+          "es": "Con esas probabilidades simulo el resto del torneo 5,000 veces y cuento cuántas veces termina primero cada equipo. En lugar de un solo pronóstico, se ve qué tan abierto está el torneo.",
+          "en": "With those probabilities I simulate the rest of the season 5,000 times and count how often each team finishes first. Instead of a single forecast, you see how open the season really is."
+        }
+      },
+      {
+        "h": { "es": "Pendientes", "en": "To do" },
+        "p": {
+          "es": "Compararlo contra un baseline simple (siempre gana el local) y simular la liguilla, que es donde de verdad se define el campeón.",
+          "en": "Compare it against a simple baseline (home team always wins) and simulate the playoffs, which is where the champion is actually decided."
+        }
+      }
+    ]
+  },
+  {
+    "id": "football",
+    "title": "Football Data Pipeline",
+    "subtitle": { "es": "La Liga y Premier League en Google Cloud", "en": "La Liga and Premier League on Google Cloud" },
+    "summary": {
+      "es": "Cada mañana Airflow baja la tabla y los partidos de La Liga y la Premier League, los guarda en Cloud Storage y los carga a BigQuery sin duplicar datos. dbt arma las capas silver y gold y el resultado se ve en Looker Studio.",
+      "en": "Every morning Airflow pulls La Liga and Premier League standings and matches, stores them in Cloud Storage and loads them into BigQuery without duplicates. dbt builds the silver and gold layers and Looker Studio shows the result."
+    },
+    "pipeline": ["API", "Airflow", "GCS", "BigQuery", "dbt", "Looker"],
+    "tags": ["Python", "Airflow", "Cloud Storage", "BigQuery", "dbt", "Docker", "Looker Studio"],
+    "links": {
+      "github": "https://github.com/SaidHoffman/Pipeline-LaLiga---Premier-Ligue",
+      "demo": "https://datastudio.google.com/reporting/429d9a0c-fa02-4608-86a9-b8e1cd533fe0"
+    },
+    "details": [
+      {
+        "h": { "es": "Qué hace", "en": "What it does" },
+        "p": {
+          "es": "Todos los días a las 7:00 am, un DAG de Airflow baja la tabla y los partidos de La Liga y la Premier League desde football-data.org y guarda el JSON crudo en Cloud Storage.",
+          "en": "Every day at 7:00 am, an Airflow DAG pulls La Liga and Premier League standings and matches from football-data.org and stores the raw JSON in Cloud Storage."
+        }
+      },
+      {
+        "h": { "es": "Arquitectura", "en": "Architecture" },
+        "p": {
+          "es": "Bronze en Cloud Storage, carga a BigQuery y dbt para silver y gold. Las dos ligas se extraen en paralelo, y antes de seguir una tarea revisa que estén los 4 archivos del día; si falta uno, el DAG falla ahí.",
+          "en": "Bronze in Cloud Storage, a load into BigQuery, and dbt for silver and gold. Both leagues are extracted in parallel, and a task checks that all 4 files for the day exist before moving on; if one is missing, the DAG fails right there."
+        }
+      },
+      {
+        "h": { "es": "Decisiones", "en": "Design choices" },
+        "p": {
+          "es": "La carga borra e inserta por liga y fecha, así que los reintentos no duplican nada. Guardar el crudo en bronze me deja reprocesar cualquier día sin volver a llamar a la API.",
+          "en": "The load deletes and inserts by league and date, so retries never duplicate anything. Keeping the raw data in bronze lets me reprocess any day without calling the API again."
+        }
+      },
+      {
+        "h": { "es": "Resultado", "en": "Result" },
+        "p": {
+          "es": "Un dashboard en Looker Studio con porcentaje de victorias, goles por partido, forma de cada equipo y zonas de Champions y descenso. 7 tests de dbt se aseguran de que no llegue basura.",
+          "en": "A Looker Studio dashboard with win percentage, goals per match, team form and Champions League and relegation zones. 7 dbt tests make sure no bad data gets through."
+        }
+      }
+    ]
+  },
+  {
+    "id": "weather",
+    "title": "Weather Data Pipeline",
+    "subtitle": { "es": "ELT contenedorizado con Airflow, dbt y Superset", "en": "Containerized ELT with Airflow, dbt and Superset" },
+    "summary": {
+      "es": "Ingesta del clima de Nueva York desde la API de Weatherstack a PostgreSQL. dbt quita duplicados y saca promedios diarios, Airflow orquesta y Superset grafica. Todo levanta con un solo docker compose.",
+      "en": "Ingests New York weather from the Weatherstack API into PostgreSQL. dbt removes duplicates and computes daily averages, Airflow orchestrates and Superset charts it. Everything starts with a single docker compose."
+    },
+    "pipeline": ["Weatherstack", "Airflow", "PostgreSQL", "dbt", "Superset"],
+    "tags": ["Python", "Airflow", "dbt", "PostgreSQL", "Superset", "Docker"],
+    "links": { "github": "https://github.com/SaidHoffman/weather-data-project" },
+    "details": [
+      {
+        "h": { "es": "Qué hace", "en": "What it does" },
+        "p": {
+          "es": "Consulta el clima actual de Nueva York en la API de Weatherstack y guarda cada lectura cruda en PostgreSQL. dbt la limpia y arma los modelos de reporte, y Superset los grafica.",
+          "en": "It queries current New York weather from the Weatherstack API and stores every raw reading in PostgreSQL. dbt cleans it and builds the reporting models, and Superset charts them."
+        }
+      },
+      {
+        "h": { "es": "Orquestación", "en": "Orchestration" },
+        "p": {
+          "es": "Un DAG de Airflow corre la ingesta con PythonOperator y después lanza dbt con DockerOperator. Postgres, Airflow, dbt, Superset y Redis levantan juntos con Docker Compose.",
+          "en": "An Airflow DAG runs ingestion with a PythonOperator and then launches dbt with a DockerOperator. Postgres, Airflow, dbt, Superset and Redis all start together with Docker Compose."
+        }
+      },
+      {
+        "h": { "es": "Modelado", "en": "Modeling" },
+        "p": {
+          "es": "El modelo de staging elimina duplicados con ROW_NUMBER() y convierte la hora a local con el offset de la zona horaria. Encima hay un mart de reporte y otro de promedios diarios de temperatura y viento.",
+          "en": "The staging model removes duplicates with ROW_NUMBER() and converts timestamps to local time using the timezone offset. On top of it sit a reporting mart and a daily averages mart for temperature and wind."
+        }
+      }
+    ]
+  },
+  {
+    "id": "nyctaxi",
+    "title": "NYC Taxi Pipeline",
+    "subtitle": { "es": "ETL a un esquema estrella", "en": "ETL into a star schema" },
+    "summary": {
+      "es": "ETL en Python que limpia viajes de taxi con reglas auditables (ninguna fila se borra sin registrarlo) y los carga a un esquema estrella en SQLite, con la integridad referencial revisada en Python y en la base.",
+      "en": "A Python ETL that cleans taxi trips with auditable rules (no row is dropped without being logged) and loads them into a SQLite star schema, with referential integrity checked in Python and in the database."
+    },
+    "pipeline": ["NYC TLC", "raw/", { "es": "Limpieza", "en": "Cleaning" }, { "es": "Esquema estrella", "en": "Star schema" }, "SQLite"],
+    "tags": ["Python", "pandas", "SQL", "SQLite", { "es": "Modelado dimensional", "en": "Dimensional modeling" }],
+    "links": { "github": "https://github.com/SaidHoffman/nyc-taxi-pipeline" },
+    "details": [
+      {
+        "h": { "es": "Qué hace", "en": "What it does" },
+        "p": {
+          "es": "Toma viajes de taxi de Nueva York, los limpia y los carga a un data warehouse en SQLite modelado como esquema estrella.",
+          "en": "It takes New York taxi trips, cleans them and loads them into a SQLite data warehouse modeled as a star schema."
+        }
+      },
+      {
+        "h": { "es": "Limpieza", "en": "Cleaning" },
+        "p": {
+          "es": "Cinco reglas de negocio: duraciones imposibles, velocidades de más de 60 mph, distancia o pasajeros en cero y nulos categóricos. Ninguna fila se borra en silencio; cada regla reporta cuántas quitó.",
+          "en": "Five business rules: impossible durations, speeds above 60 mph, zero distance or passengers, and categorical nulls. No row is removed silently; every rule reports how many it dropped."
+        }
+      },
+      {
+        "h": { "es": "Modelo", "en": "Model" },
+        "p": {
+          "es": "Una tabla de hechos con los viajes y tres dimensiones: zona (la misma tabla sirve para origen y destino), tipo de pago y tipo de taxi. La integridad referencial se valida en Python y en la propia base.",
+          "en": "A fact table of trips and three dimensions: zone (one table serves both pickup and dropoff), payment type and taxi type. Referential integrity is checked in Python and in the database itself."
+        }
+      },
+      {
+        "h": { "es": "Por qué me gusta", "en": "Why I like it" },
+        "p": {
+          "es": "Es un proyecto chico, pero tiene las prácticas que uso en todo lo demás: crudo inmutable, transformaciones trazables y cargas idempotentes.",
+          "en": "It's a small project, but it has the habits I use everywhere else: immutable raw data, traceable transformations and idempotent loads."
+        }
+      }
+    ]
   }
 ]

@@ -1,29 +1,51 @@
 [
   {
     "company": "América Móvil Contenido (Grupo Carso)",
-    "role": "Becario QA Tester",
-    "type": "Prácticas Profesionales",
-    "startDate": "Oct 2025",
-    "endDate": "Abr 2026",
+    "role": { "es": "Becario QA Tester", "en": "QA Tester Intern" },
+    "type": { "es": "Prácticas profesionales", "en": "Internship" },
+    "start": { "es": "Oct 2025", "en": "Oct 2025" },
+    "end": { "es": "Abr 2026", "en": "Apr 2026" },
     "bullets": [
-      "Ejecuté más de 120 casos de prueba funcionales y de regresión en portales web de Marca Claro, documentando resultados por sprint con cobertura del 100% de los requerimientos definidos.",
-      "Reduje el tiempo promedio de cierre de incidencias en ~25% implementando plantillas estandarizadas de reporte, garantizando trazabilidad completa desde la detección hasta la resolución.",
-      "Detecté y escalé al equipo líder un promedio de 10 incidencias por ciclo de validación, apoyando la estabilidad de los portales web Marca Claro de toda latinoamerica activos durante el periodo."
+      {
+        "es": "Ejecuté más de 120 casos de prueba funcionales y de regresión en los portales web de Marca Claro y documenté los resultados de cada sprint.",
+        "en": "Ran 120+ functional and regression test cases on Claro's web portals and documented the results of every sprint."
+      },
+      {
+        "es": "Armé plantillas estandarizadas para reportar incidencias, lo que bajó cerca de 25 % el tiempo de cierre.",
+        "en": "Built standardized bug report templates that cut resolution time by about 25%."
+      },
+      {
+        "es": "Automaticé con Python y Playwright el llenado y la validación de formularios web definidos en YAML.",
+        "en": "Automated web form filling and validation with Python and Playwright, driven by YAML configs."
+      },
+      {
+        "es": "Detectaba y escalaba en promedio 10 incidencias por ciclo de validación en portales de toda Latinoamérica.",
+        "en": "Found and escalated around 10 issues per validation cycle across portals for all of Latin America."
+      }
     ],
-    "tags": ["QA Testing", "Scripts Python", "Pruebas de Regresión", "Reporte de Bugs", "Agile", "Trabajo en Equipo"],
+    "tags": ["QA", "Python", "Playwright", "Regression testing", "Agile"],
     "letterUrl": "/assets/material/carta-recomendacion.pdf"
   },
   {
-    "company": "Instituto Politécnico Nacional – ESCOM",
-    "role": "Servicio Social — Procesamiento Digital de Señales",
-    "type": "Servicio Social",
-    "startDate": "Mar 2025",
-    "endDate": "Sep 2025",
+    "company": "Instituto Politécnico Nacional · ESCOM",
+    "role": { "es": "Servicio social: procesamiento digital de señales", "en": "Research assistant: digital signal processing" },
+    "type": { "es": "Servicio social", "en": "Social service" },
+    "start": { "es": "Mar 2025", "en": "Mar 2025" },
+    "end": { "es": "Sep 2025", "en": "Sep 2025" },
     "bullets": [
-      "Incrementé la precisión en clasificación de señales acústicas en un 15% automatizando la generación de reportes técnicos y métricas de desempeño con Python (Pandas, Matplotlib).",
-      "Reduje la interferencia de señal en un 20% desarrollando filtros de reducción de ruido y algoritmos de optimización con NumPy y SciPy aplicados a conjuntos de datos de audio del IPN.",
-      "Procesé y normalicé más de 50,000 muestras de audio mediante scripts modulares de pre y post procesamiento, reduciendo el tiempo de análisis manual en ~60%."
+      {
+        "es": "Procesé y normalicé más de 50,000 muestras de audio con scripts modulares en Python, y el análisis manual se redujo cerca de 60 %.",
+        "en": "Processed and normalized 50,000+ audio samples with modular Python scripts, cutting manual analysis by about 60%."
+      },
+      {
+        "es": "Desarrollé filtros de reducción de ruido con NumPy y SciPy que bajaron la interferencia alrededor de 20 %.",
+        "en": "Built noise reduction filters with NumPy and SciPy that lowered interference by about 20%."
+      },
+      {
+        "es": "Automaticé los reportes técnicos y las métricas de clasificación con pandas y Matplotlib.",
+        "en": "Automated technical reports and classification metrics with pandas and Matplotlib."
+      }
     ],
-    "tags": ["Python", "Pandas", "NumPy", "SciPy", "Matplotlib", "Procesamiento de Señales"]
+    "tags": ["Python", "pandas", "NumPy", "SciPy", "Matplotlib"]
   }
 ]
